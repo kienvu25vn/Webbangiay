@@ -86,13 +86,8 @@
                                 <ul class="list-main">
                                     <!-- <li><i class="ti-location-pin"></i> Store location</li>
                                     <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li> -->
-                                    <c:if test="${sessionScope.acc != null}">
-                                        <li><i class="ti-user"></i>Hello ${sessionScope.acc.user}</li>
-                                        <li><i class="ti-power-off"></i><a href="logout">Logout</a></li>
-                                    </c:if>
-                                    <c:if test="${sessionScope.acc == null}">
-                                        <li><i class="ti-power-off"></i><a href="Login.jsp">Login</a></li>
-                                    </c:if>
+                                    <li><i class="ti-user"></i> <a href="#">My account</a></li>
+                                    <li><i class="ti-power-off"></i><a href="login.html#">Login</a></li>
                                 </ul>
                             </div>
                             <!-- End Top Right -->
@@ -167,19 +162,17 @@
                                                 else
                                                     out.print(listC.size());
                                                 %> Items</span>
-                                            <a href="cart.jsp">View Cart</a>
+                                            <a href="cart.html">View Cart</a>
                                         </div>
                                         <ul class="shopping-list" id="shopping-cart">
-                                            <c:forEach items="${listCart}" var="p">
-                                                <li class="car-item">
-                                    
-                                                    <a onclick="deletecartitem(${p.product.id} )" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                    <a class="cart-img" href="productdetail?pid=${p.product.id}"><img src="${p.product.image}" alt="#"></a>
-                                                    <h4><a href="productdetail?pid=${p.product.id}">${p.product.title}</a></h4>
-                                                    <p class="quantity cart-quantity" id="cart-quantity" value="${p.quantity}">${p.quantity}x - <span class="amount cart-price" id="cart-price" value="${p.product.price}">$${p.product.price}</span> - <span class="size">Size ${p.size}</span></p>
-                                                </li>
+                                             <c:forEach items="${listCart}" var="p">
+                                                <li>
+                                                <a onclick="deletecartitem(${p.product.id} , ${p.size})" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+                                                <a class="cart-img" href="productdetail?pid=${p.product.id}"><img src="${p.product.image}" alt="#"></a>
+                                                <h4><a href="productdetail?pid=${p.product.id}">${p.product.title}</a></h4>
+                                                <p class="quantity">${p.quantity}x - <span class="amount">$${p.product.price}</span> - <span class="size">Size ${p.size}</span></p>
+                                            </li>
                                             </c:forEach>
-
                                         </ul>
                                         <div class="bottom">
                                             <div class="total">
@@ -246,9 +239,6 @@
                                                         </ul>
                                                     </li>
                                                     <li><a href="contact.html">Contact Us</a></li>
-                                                     <c:if test="${sessionScope.acc.isAdmin == 1}">
-                                                        <li><a href="manager">Manage Products</a></li>
-                                                        </c:if>
                                                 </ul>
                                             </div>
                                         </div>
@@ -264,7 +254,6 @@
         </header>
 
         <!--/ End Header -->
-
         <!-- Breadcrumbs -->
         <div class="breadcrumbs">
             <div class="container">
@@ -273,7 +262,14 @@
                         <div class="bread-inner">
                             <ul class="bread-list">
                                 <li><a href="shopmain"> Shop<i class="ti-arrow-right"></i></a></li>
-                                <li class="active"><a href="blog-single.html">${tag}</a></li>
+                                <c:if test = "${TAG == 'All Products'}">
+                                     <li class="active"><a href="shopmain">${TAG}<i class="ti-arrow-right"></i></a></li>
+                                </c:if>
+                                <c:if test = "${TAG != 'All Products'}">
+                                     <li class="active"><a href="${proCid}">${TAG}<i class="ti-arrow-right"></i></a></li>
+                                </c:if>
+                                
+                                <li class="active"><a href="blog-single.html">${tagDetail}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -281,234 +277,102 @@
             </div>
         </div>
         <!-- End Breadcrumbs -->
-        <p  data-value="${tagID}" id="tagID" style="display: none;">${tagID}</p>
+
         <!-- Product Style -->
-        <section class="product-area shop-sidebar shop section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 col-12">
-                        <div class="shop-sidebar">
-                            <!-- Single Widget -->
-                            <div class="single-widget category">
-                                <h3 class="title">Categories</h3>
-                                <ul class="categor-list"  >
-                                    <c:forEach items="${listCategory}" var="o">
-                                        <li><a href="category?cid=${o.cid}" ${tagID == o.cid ? "style=\"color: #F7941D;\"" : ""}">${o.cname}</a></li>
-                                        </c:forEach>
 
-                                </ul>
+        <!--/ End Product Style 1  -->	
+        <div class="modal-fade">
+            <div class="modal-content" style="border:none;">
+                <div class="modal-body" style="padding: 60px;">
+                    <div class="row no-gutters" style="margin-left: 200px ; margin-right: 200px;">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <!-- Product Slider -->
+                    <div class="product-gallery">
+                        <div class="quickview-slider-active">
+                            <div class="single-slider">
+                                <img src="${prodetail.image}" alt="#">
                             </div>
-                            <!--/ End Single Widget -->
-                            <!-- Shop By Price -->
-                            <div class="single-widget range">
-                                <h3 class="title">Price</h3>
-                                <!--										<div class="price-filter">
-                                                                                                                        <div class="price-filter-inner">
-                                                                                                                                <div id="slider-range"></div>
-                                                                                                                                        <div class="price_slider_amount">
-                                                                                                                                        <div class="label-input">
-                                                                                                                                                <span>Range:</span><input type="text" id="amount" name="price" placeholder="Add Your Price"/>
-                                                                                                                                        </div>
-                                                                                                                                </div>
-                                                                                                                        </div>
-                                                                                                                </div>-->
-                                <ul class="check-box-list">
-                                    <li>
-                                        <label class="checkbox-inline" for="0"><input onchange="sortProduct(1,${tagID})" name="priceP" id="0" type="radio" value="all" checked>All</label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="1"><input onchange="sortProduct(1,${tagID})" name="priceP" id="1" type="radio" value="100">$100 - $300</label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="2"><input onchange="sortProduct(1,${tagID})" name="priceP" id="2" type="radio" value="300">$300 - $500</label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="3"><input onchange="sortProduct(1,${tagID})" name="priceP" id="3" type="radio" value="500">$500 - $700</label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="4"><input onchange="sortProduct(1,${tagID})" name="priceP" id="4" type="radio" value="700">> $700</label>
-                                    </li>
-                                </ul>
+                            <div class="single-slider">
+                                <img src="${prodetail.image}" alt="#">
                             </div>
-                            <div class="single-widget range">
-                                <h3 class="title">Color</h3>
-                                <ul class="check-box-list">
-                                    <li>
-                                        <label class="checkbox-inline" for="c0"><input onchange="sortProduct(1,${tagID})" name="color" id="c0" type="radio" value="all" checked>All</label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="c1"><input onchange="sortProduct(1,${tagID})" name="color" id="c1" type="radio" value="white"><span style="background: #fff;height: 14px; width: 14px;border-radius: 50% ;color: transparent" >ab</span><span class="color-des">&nbsp;White</span></label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="c2"><input onchange="sortProduct(1,${tagID})" name="color" id="c2" type="radio" value="black"><span style="background: #000;height: 14px; width: 14px;border-radius: 50% ;color: transparent" >ab</span><span class="color-des">&nbsp;Black</span></label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="c3"><input onchange="sortProduct(1,${tagID})" name="color" id="c3" type="radio" value="yellow"><span style="background: #ff0;height: 14px; width: 14px;border-radius: 50% ;color: transparent" >ab</span><span class="color-des">&nbsp;Yellow</span></label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="c4"><input onchange="sortProduct(1,${tagID})" name="color" id="c4" type="radio" value="red"><span style="background: #ff0000;height: 14px; width: 14px;border-radius: 50% ;color: transparent" >ab</span><span class="color-des">&nbsp;Red</span></label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="c5"><input onchange="sortProduct(1,${tagID})" name="color" id="c5" type="radio" value="green"><span style="background: #00ff00;height: 14px; width: 14px;border-radius: 50% ;color: transparent" >ab</span><span class="color-des">&nbsp;Green</span></label>
-                                    </li> 
-                                    <li>
-                                        <label class="checkbox-inline" for="c6"><input onchange="sortProduct(1,${tagID})" name="color" id="c6" type="radio" value="grey"><span style="background: #eee;height: 14px; width: 14px;border-radius: 50% ;color: transparent">ab</span><span class="color-des">&nbsp;Grey</span></label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!--/ End Shop By Price -->
-                            <!-- Single Widget -->
-                            <div class="single-widget recent-post">
-                                <h3 class="title">Recent post</h3>
-                                <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
-                                    </div>
-                                    <div class="content">
-                                        <h5><a href="#">Girls Dress</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Single Post -->
-                                <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
-                                    </div>
-                                    <div class="content">
-                                        <h5><a href="#">Women Clothings</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Single Post -->
-                                <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
-                                    </div>
-                                    <div class="content">
-                                        <h5><a href="#">Man Tshirt</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Single Post -->
-                            </div>
-                            <!--/ End Single Widget -->
-                            <!-- Single Widget -->
-                            <!--								<div class="single-widget category">
-                                                                                                    <h3 class="title">Manufacturers</h3>
-                                                                                                    <ul class="categor-list">
-                                                                                                            <li><a href="#">Forever</a></li>
-                                                                                                            <li><a href="#">giordano</a></li>
-                                                                                                            <li><a href="#">abercrombie</a></li>
-                                                                                                            <li><a href="#">ecko united</a></li>
-                                                                                                            <li><a href="#">zara</a></li>
-                                                                                                    </ul>
-                                                                                            </div>-->
-                            <!--/ End Single Widget -->
                         </div>
                     </div>
-                    <div class="col-lg-9 col-md-8 col-12">
-                        <div class="row">
-                            <div class="col-12">
-                                <!--show top-->
-                                <div class="shop-top">
-                                    <div class="shop-shorter">
-
-
-                                        <div class="single-shorter">
-                                            <label>Sort By :</label>
-
-                                            <select id="sortOption" onchange="sortProduct(${tagID})">
-                                                <option value="none">None</option>
-                                                <option value="title">Name</option>
-                                                <option value="price">Price</option>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="single-shorter">
-                                            <label id="searchfor"></label>
-                                        </div>   
-
-                                    </div>
-                                    <ul class="view-mode">
-
-                                        <li><a id="lastpage" onclick="lastpage()"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
-
-
-                                        <li><span class="active" id="pagetag">${pagetag}</span><span>/</span><span id="pagetags">${pagetags}</span></li>
-
-                                        <li><a id="nextpage" onclick="nextpage()"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-
-
-                                    </ul>
-
+                    <!-- End Product slider -->
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="quickview-content">
+                        <h2>${prodetail.title}</h2>
+                        <div class="quickview-ratting-review">
+                            <div class="quickview-ratting-wrap">
+                                <div class="quickview-ratting">
+                                    <i class="yellow fa fa-star"></i>
+                                    <i class="yellow fa fa-star"></i>
+                                    <i class="yellow fa fa-star"></i>
+                                    <i class="yellow fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
                                 </div>
-                                <!--								/ End Shop Top -->
+                                <a href="#"> (1 customer review)</a>
+                            </div>
+                            <div class="quickview-stock">
+                                <span><i class="fa fa-check-circle-o"></i> in stock</span>
                             </div>
                         </div>
-                        <div id="productView" class="row">
-                            <c:forEach items="${listP}" var="o">
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <div class="single-product">
-                                        <div class="product-img">
-                                            <a href="productdetail?pid=${o.id}&tag=${tag}">
-                                                <img class="default-img" src="${o.image}" alt="#">
-                                                <img class="hover-img" src="${o.image}" alt="#">
-                                            </a>
-                                            <div class="button-head">
-                                                <div class="product-action">
-                                                    <input type="hidden" value="${o.id}">
-                                                    <a data-toggle="modal" data-target="#exampleModal" title="Quick View" onclick="quickShop(${o.id})"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                                    <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                                    <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
-                                                </div>
-                                                <div class="product-action-2">
-                                                    <a title="Add to cart" onclick="addtocartquick(${o.id})">Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h3><a href="product-details.html">${o.title}</a></h3>
-                                            <div class="product-price">
-                                                <span>${o.price}$</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <h3>$${prodetail.price}</h3>
+                        <div class="quickview-peragraph">
+                            <p>${prodetail.description}</p>
+                        </div>
+                        <div class="size">
+                            <div class="row">
+                                <div class="col-lg-6 col-12">
+                                    <h5 class="title">Size</h5>
+                                    <select id="size">
+                                        <option selected="selected">s</option>
+                                        <option>m</option>
+                                        <option>l</option>
+                                        
+                                    </select>
                                 </div>
-                            </c:forEach>
-
+                                
+                            </div>
+                        </div>
+                        <div class="quantity" style="margin-bottom: 20px;">
+                            <!-- Input Order -->
+                            <div class="input-group">
+                                <div class="button minus">
+                                    <button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                        <i class="ti-minus"></i>
+                                    </button>
+                                </div>
+                                <input type="text" id="quantity" name="quant[1]" class="input-number"  data-min="1" data-max="1000" value="1">
+                                <div class="button plus">
+                                    <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
+                                        <i class="ti-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!--/ End Input Order -->
+                        </div>
+                        <div class="add-to-cart">
+                            <a onclick="addtocart()" class="btn">Add to cart</a>
+                            <a href="#" class="btn min"><i class="ti-heart"></i></a>
+                            <a href="#" class="btn min"><i class="fa fa-compress"></i></a>
+                        </div>
+                        <div class="default-social">
+                            <h4 class="share-now">Share:</h4>
+                            <ul>
+                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                                <li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
-        </section>
-        <!--/ End Product Style 1  -->	
-
+        </div>
+            </div>
+        </div>
+        
         <!-- Start Shop Newsletter  -->
         <!--		<section class="shop-newsletter section">
                                 <div class="container">
@@ -535,120 +399,21 @@
 
 
         <!-- Modal -->
-        <div  class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row no-gutters">
-                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                <!-- Product Slider -->
-                                <div class="product-gallery">
-                                    <div class="quickview-slider-active">
-                                        <div class="single-slider">
-                                            <img src="https://via.placeholder.com/569x528" alt="#">
-                                        </div>
-                                        <div class="single-slider">
-                                            <img src="https://via.placeholder.com/569x528" alt="#">
-                                        </div>
-                                        <div class="single-slider">
-                                            <img src="https://via.placeholder.com/569x528" alt="#">
-                                        </div>
-                                        <div class="single-slider">
-                                            <img src="https://via.placeholder.com/569x528" alt="#">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Product slider -->
-                            </div>
-                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                <div class="quickview-content">
-                                    <h2>Flared Shift Dress</h2>
-                                    <div class="quickview-ratting-review">
-                                        <div class="quickview-ratting-wrap">
-                                            <div class="quickview-ratting">
-                                                <i class="yellow fa fa-star"></i>
-                                                <i class="yellow fa fa-star"></i>
-                                                <i class="yellow fa fa-star"></i>
-                                                <i class="yellow fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <a href="#"> (1 customer review)</a>
-                                        </div>
-                                        <div class="quickview-stock">
-                                            <span><i class="fa fa-check-circle-o"></i> in stock</span>
-                                        </div>
-                                    </div>
-                                    <h3>$29.00</h3>
-                                    <div class="quickview-peragraph">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam.</p>
-                                    </div>
-                                    <div class="size">
-                                        <div class="row">
-                                            <div class="col-lg-6 col-12">
-                                                <h5 class="title">Size</h5>
-                                                <select>
-                                                    <option selected="selected">s</option>
-                                                    <option>m</option>
-                                                    <option>l</option>
-                                                    <option>xl</option>
-                                                </select>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="quantity">
-                                        <!-- Input Order -->
-                                        <div class="input-group">
-                                            <div class="button minus">
-                                                <button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-                                                    <i class="ti-minus"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="1000" value="1">
-                                            <div class="button plus">
-                                                <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
-                                                    <i class="ti-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <!--/ End Input Order -->
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <a href="#" class="btn">Add to cart</a>
-                                        <a href="#" class="btn min"><i class="ti-heart"></i></a>
-                                        <a href="#" class="btn min"><i class="fa fa-compress"></i></a>
-                                    </div>
-                                    <div class="default-social">
-                                        <h4 class="share-now">Share:</h4>
-                                        <ul>
-                                            <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                            <li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!-- Modal end -->
 
         <script>
-            function addtocartquick(pid) {
-
+            function addtocart(){
+                var size = document.getElementById('size').value;
+                var quantity = document.getElementById('quantity').value;
+                var idP = ${prodetail.id};
                 $.ajax({
                     url: "/Webbangiay/addtocart",
                     type: "get", //send it through get method
                     data: {
-                        pid: pid,
-                        size: "S",
-                        quantity: 1
+                        pid: idP,
+                        size: size,
+                        quantity: quantity
                     },
                     success: function (data) {
                         //Do Something
@@ -671,19 +436,14 @@
                     }
                 });
             }
-            function deletecartitem(pid ){
-                
-//                var pid = ${p.product.id};
-//                var size = ${p.size};
-//                var quantity = ${p.product.quantity};
-                
+            function deletecartitem(pid , size){
+
                 $.ajax({
                     url: "/Webbangiay/deletecartitem",
                     type: "get", //send it through get method
                     data: {
                         pid: pid,
-                       
-//                        quantity: quantity
+                        size : size,
                     },
                     success: function (data) {
                         //Do Something
@@ -705,24 +465,6 @@
                         //Do Something to handle error
                     }
                 });
-            }
-            function nextpage() {
-                var pagetag = Number(document.getElementById('pagetag').innerHTML);
-                var pagetags = Number(document.getElementById('pagetags').innerHTML);
-                if (pagetag < pagetags) {
-                    document.getElementById('pagetag').innerHTML = pagetag + 1;
-                    sortProduct(2,${tagID});
-                }
-
-            }
-            function lastpage() {
-                var pagetag = Number(document.getElementById('pagetag').innerHTML);
-
-                if (pagetag > 1) {
-                    document.getElementById('pagetag').innerHTML = pagetag - 1;
-                    sortProduct(2,${tagID});
-                }
-
             }
             function quickShop(id) {
                 $.ajax({
@@ -741,16 +483,7 @@
                     }
                 });
             }
-            function sortProduct(change, tagID) {
-                var pagetag = 1;
-                if (change === 2) {
-                    pagetag = document.getElementById('pagetag').innerHTML;
-                } else {
-                    document.getElementById('pagetag').innerHTML = 1;
-                }
-
-
-
+            function sortProduct(tagID) {
                 var sortBy = document.getElementById('sortOption').value;
                 var Price = "";
                 var Color = "";
@@ -777,42 +510,12 @@
                         sortName: sortBy,
                         price: Price,
                         color: Color
-
                     },
                     success: function (data) {
                         //Do Something
 
                         var row = document.getElementById("productView");
                         row.innerHTML = data;
-
-                        var arr = document.getElementsByClassName('single-p');
-
-                        if (arr.length <= 9) {
-                            document.getElementById('pagetags').innerHTML = 1;
-
-                        } else {
-                            var pt = Number(pagetag);
-                            var len = arr.length;
-                            if (len % 9 == 0) {
-                                document.getElementById('pagetags').innerHTML = len / 9;
-                            } else {
-
-                                document.getElementById('pagetags').innerHTML = Math.floor(len / 9) + 1;
-
-                            }
-                            var data1 = "";
-                            if (pt <= Math.floor(len / 9)) {
-                                for (var i = (Number(pagetag) - 1) * 9; i < Number(pagetag) * 9; i++) {
-                                    data1 += arr[i].outerHTML;
-                                }
-                            } else {
-                                for (var i = (pt - 1) * 9; i < len; i++) {
-                                    data1 += arr[i].outerHTML;
-                                }
-                            }
-                            row.innerHTML = data1;
-
-                        }
 
                     },
                     error: function (xhr) {

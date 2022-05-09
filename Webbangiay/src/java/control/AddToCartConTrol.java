@@ -6,9 +6,9 @@ package control;
 
 import dao.DAO;
 import entity.Account;
-import entity.Category;
-import entity.Product;
+import entity.Cart;
 import entity.UserCarts;
+import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Admin
  */
-public class ShopMainControl extends HttpServlet {
+public class AddToCartConTrol extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,41 +37,32 @@ public class ShopMainControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            DAO dao = new DAO();
-            List<Product> listP = new ArrayList<>();
-            List<Product> list = dao.getAllProducts();
-            List<Category> listC = dao.getAllCategorys();
-            int pagetags = list.size() / 9 + 1;
-            for (int i = 0; i < 9; i++) {
-                listP.add(list.get(i));
-            }
-            int flag = 0;
-            HttpSession session = request.getSession();
-            List<UserCarts> UserCarts = (List<UserCarts>) session.getAttribute("listUserCarts");
-            Account acc = (Account) session.getAttribute("acc");
-            if (UserCarts == null) {
-                UserCarts = new ArrayList<>();
-                session.setAttribute("listUserCarts", new ArrayList<>());
-            } else {
-                for (UserCarts carts : UserCarts) {
-                    if (carts.getIdUser() == acc.getId()) {
-                        flag = 1;
-                        session.setAttribute("listCart", carts.getListCart());
-                        break;
-                    }
-                }
-            }
-            if (flag == 0) {
-                session.setAttribute("listCart", new ArrayList<>());
-            }
-            request.setAttribute("listP", listP);
-            request.setAttribute("listCategory", listC);
-            request.setAttribute("tag", "All Products");
-            request.setAttribute("pagetags", pagetags);
-            request.setAttribute("pagetag", 1);
-            request.getRequestDispatcher("shop.jsp").forward(request, response);
-        } catch (Exception e) {
+        HttpSession session = request.getSession();
+        List<Cart> listC = (List<Cart>) session.getAttribute("listCart");
+        if (listC == null) {
+            listC = new ArrayList<>();
+        }
+        PrintWriter out = response.getWriter();
+        String pid = request.getParameter("pid");
+        String size = request.getParameter("size");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+      
+        DAO dao = new DAO();
+
+        Product p = dao.getProductById(pid);
+        listC.add(new Cart(p,size , quantity ));
+        
+        List<UserCarts> listCarts = (List<UserCarts>) session.getAttribute("listUserCarts");
+        Account acc = (Account) session.getAttribute("acc");
+        listCarts.add(new UserCarts(listC, acc.getId()));
+        session.setAttribute("listCarts", listCarts);
+        for (Cart c : listC) {
+            out.println("<li class=\"cart-item\">\n"
+                    + "                                                <a onclick=\"deletecartitem(" + c.getProduct().getId() + ")\" class=\"remove\" title=\"Remove this item\"><i class=\"fa fa-remove\"></i></a>\n"
+                    + "                                                <a class=\"cart-img\" href=\"productdetail?pid=" + c.getProduct().getId() + "\"><img src=\"" + c.getProduct().getImage() + "\" alt=\"#\"></a>\n"
+                    + "                                                <h4><a href=\"productdetail?pid=" + c.getProduct().getId() + "\">" + c.getProduct().getTitle() + "</a></h4>\n"
+                    + "                                                <p class=\"quantity cart-quantity\" id=\"cart-quantity\" data-value=\"" + c.getQuantity() + "\">" + c.getQuantity() + "x - <span class=\"amount cart-price\" id=\"cart-price\" data-value=\"" + c.getProduct().getPrice() + "\">$" + c.getProduct().getPrice() + "</span> - <span class=\"size\">Size " + c.getSize() + "</span></p>\n"
+                    + "                                            </li>");
         }
     }
 

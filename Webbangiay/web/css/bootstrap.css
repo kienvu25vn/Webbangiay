@@ -713,7 +713,14 @@ pre code {
     margin-right: -15px;
     margin-left: -15px
 }
-
+.row1 {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px
+}
 .no-gutters {
     margin-right: 0;
     margin-left: 0
@@ -5264,7 +5271,17 @@ button.close {
     border-radius: .3rem;
     outline: 0
 }
-
+.modal-content1{
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    outline: 0
+}
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -5312,7 +5329,12 @@ button.close {
     flex: 1 1 auto;
     padding: 15px
 }
-
+.modal-body1 {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 60px;
+}
 .modal-footer {
     display: -ms-flexbox;
     display: flex;

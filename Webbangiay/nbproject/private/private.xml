@@ -2,6 +2,25 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/web/home.jsp</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/web/cart.jsp</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/web/shop.jsp</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/src/java/control/AddToCartConTrol.java</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/src/java/dao/DAO.java</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/web/Edit.jsp</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/src/java/entity/Account.java</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/src/java/control/ShopMainControl.java</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/src/java/control/LoginControl.java</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/src/java/entity/UserCarts.java</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/src/java/control/ManagerControl.java</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/src/java/control/LoadControl.java</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/web/Login.jsp</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/src/java/control/StartControl.java</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/src/java/control/LogOutControl.java</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/web/checkout.html</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/src/java/control/EditControl.java</file>
+            <file>file:/D:/OneDrive/Documents/NetBeansProjects/Webbangiay/web/checkout.jsp</file>
+        </group>
     </open-files>
 </project-private>

@@ -5,10 +5,6 @@
         <servlet-class>control.HomeControl</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ManagerControl</servlet-name>
-        <servlet-class>control.ManagerControl</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>StartControl</servlet-name>
         <servlet-class>control.StartControl</servlet-class>
     </servlet>
@@ -37,20 +33,24 @@
         <servlet-class>control.SearchProductControl</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddControl</servlet-name>
-        <servlet-class>control.AddControl</servlet-class>
+        <servlet-name>ProductDetailControl</servlet-name>
+        <servlet-class>control.ProductDetailControl</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DeleteControl</servlet-name>
-        <servlet-class>control.DeleteControl</servlet-class>
+        <servlet-name>PageChangeControl</servlet-name>
+        <servlet-class>control.PageChangeControl</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>EditControl</servlet-name>
-        <servlet-class>control.EditControl</servlet-class>
+        <servlet-name>AddToCartConTrol</servlet-name>
+        <servlet-class>control.AddToCartConTrol</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LoadControl</servlet-name>
-        <servlet-class>control.LoadControl</servlet-class>
+        <servlet-name>DeleteCartControl</servlet-name>
+        <servlet-class>control.DeleteCartControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckOutConTrol</servlet-name>
+        <servlet-class>control.CheckOutConTrol</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeControl</servlet-name>
@@ -78,10 +78,6 @@
         <url-pattern>/quickshop</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ManagerControl</servlet-name>
-        <url-pattern>/manager</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>SortProductControl</servlet-name>
         <url-pattern>/sortproduct</url-pattern>
     </servlet-mapping>
@@ -94,24 +90,28 @@
         <url-pattern>/searchproduct</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddControl</servlet-name>
-        <url-pattern>/add</url-pattern>
+        <servlet-name>ProductDetailControl</servlet-name>
+        <url-pattern>/productdetail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeleteControl</servlet-name>
-        <url-pattern>/delete</url-pattern>
+        <servlet-name>PageChangeControl</servlet-name>
+        <url-pattern>/pagechange</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EditControl</servlet-name>
-        <url-pattern>/edit</url-pattern>
+        <servlet-name>AddToCartConTrol</servlet-name>
+        <url-pattern>/addtocart</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoadControl</servlet-name>
-        <url-pattern>/loadProduct</url-pattern>
+        <servlet-name>DeleteCartControl</servlet-name>
+        <url-pattern>/deletecartitem</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckOutConTrol</servlet-name>
+        <url-pattern>/checkout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            3000
         </session-timeout>
     </session-config>
 </web-app>

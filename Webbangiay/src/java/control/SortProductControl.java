@@ -8,6 +8,7 @@ import dao.DAO;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -35,12 +36,21 @@ public class SortProductControl extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        DAO dao = new DAO();
         String cid = request.getParameter("cid");
+
+        String tag = "";
+        if (cid == null) {
+            tag = "All Products";
+        } else {
+            tag = dao.getCategoryNameById(cid);
+        }
         String sortBy = request.getParameter("sortName");
         String price = request.getParameter("price");
         String color = request.getParameter("color");
-        List<Product> list = null;
-        DAO dao = new DAO();
+         
+        List<Product> list = new ArrayList<>();
+
         list = dao.getProductsByCidAndPriceAndColor(cid, price, color);
         if (sortBy.equals("none")) {
             list = dao.getProductsByCidAndPriceAndColor(cid, price, color);
@@ -61,10 +71,10 @@ public class SortProductControl extends HttpServlet {
         }
         if (list != null) {
             for (Product p : list) {
-                out.println("<div class=\"col-lg-4 col-md-6 col-12\">\n"
+                out.println("<div class=\"col-lg-4 col-md-6 col-12 single-p\">\n"
                         + "                                                    <div class=\"single-product\">\n"
                         + "                                                        <div class=\"product-img\">\n"
-                        + "                                                            <a href=\"product-details.html\">\n"
+                        + "                                                            <a href=\"productdetail?pid=" + p.getId() + "&tag=" + tag + "\">\n"
                         + "                                                                <img class=\"default-img\" src=\"" + p.getImage() + "\" alt=\"#\">\n"
                         + "                                                                <img class=\"hover-img\" src=\"" + p.getImage() + "\" alt=\"#\">\n"
                         + "                                                            </a>\n"
@@ -76,7 +86,7 @@ public class SortProductControl extends HttpServlet {
                         + "                                                                    <a title=\"Compare\" href=\"#\"><i class=\"ti-bar-chart-alt\"></i><span>Add to Compare</span></a>\n"
                         + "                                                                </div>\n"
                         + "                                                                <div class=\"product-action-2\">\n"
-                        + "                                                                    <a title=\"Add to cart\" href=\"#\">Add to cart</a>\n"
+                        + "                                                                    <a title=\"Add to cart\" onclick=\"addtocartquick(" + p.getId() + ")\">Add to cart</a>\n"
                         + "                                                                </div>\n"
                         + "                                                            </div>\n"
                         + "                                                        </div>\n"
@@ -89,7 +99,7 @@ public class SortProductControl extends HttpServlet {
                         + "                                                    </div>\n"
                         + "                                                </div>");
             }
-        } 
+        }
 
     }
 

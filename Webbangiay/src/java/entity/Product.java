@@ -13,6 +13,7 @@ public class Product {
     int id;
     String name, title, description, image, color;
     double price;
+
     public Product() {
     }
 

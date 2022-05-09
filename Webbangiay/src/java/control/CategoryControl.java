@@ -42,11 +42,13 @@ public class CategoryControl extends HttpServlet {
             List<Product> list = dao.getCategoryProducts(cid);
             List<Category> listC = dao.getAllCategorys();
             String tagName = dao.getCategoryNameById(cid);
-
+            int pagetags = list.size() / 9 + 1;
             request.setAttribute("tagID", cid);
             request.setAttribute("listP", list);
             request.setAttribute("listCategory", listC);
             request.setAttribute("tag", tagName);
+            request.setAttribute("pagetags", pagetags);
+            request.setAttribute("pagetag", 1);
             request.getRequestDispatcher("shop.jsp").forward(request, response);
         } catch (Exception e) {
         }

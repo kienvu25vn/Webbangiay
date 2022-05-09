@@ -5,9 +5,12 @@
 package control;
 
 import dao.DAO;
+import entity.Account;
+import entity.UserCarts;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,11 +36,29 @@ public class StartControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         try {
+            int flag = 0;
             DAO dao = new DAO();
             List<Product> list = dao.getAllProductsByCID("1");
-            
+            HttpSession session = request.getSession();
+            List<UserCarts> UserCarts = (List<UserCarts>) session.getAttribute("listUserCarts");
+            Account acc = (Account) session.getAttribute("acc");
+            if (UserCarts == null) {
+                UserCarts = new ArrayList<>();
+                session.setAttribute("listUserCarts", new ArrayList<>());
+            } else {
+                for (UserCarts carts : UserCarts) {
+                    if (carts.getIdUser() == acc.getId()) {
+                        flag = 1;
+                        session.setAttribute("listCart", carts.getListCart());
+                        break;
+                    }
+                }
+            }
+            if (flag == 0) {
+                session.setAttribute("listCart", new ArrayList<>());
+            }
             request.setAttribute("listByCID", list);
             request.setAttribute("cid", 1);
             request.getRequestDispatcher("home.jsp").forward(request, response);

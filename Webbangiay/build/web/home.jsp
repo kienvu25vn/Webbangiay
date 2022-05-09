@@ -1,3 +1,6 @@
+<%@page import="entity.Cart"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -83,14 +86,13 @@
                                 <ul class="list-main">
                                     <!-- <li><i class="ti-location-pin"></i> Store location</li>
                                     <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li> -->
-                                    
                                     <c:if test="${sessionScope.acc != null}">
                                         <li><i class="ti-user"></i>Hello ${sessionScope.acc.user}</li>
                                         <li><i class="ti-power-off"></i><a href="logout">Logout</a></li>
-                                    </c:if>
-                                    <c:if test="${sessionScope.acc == null}">
+                                            </c:if>
+                                            <c:if test="${sessionScope.acc == null}">
                                         <li><i class="ti-power-off"></i><a href="Login.jsp">Login</a></li>
-                                    </c:if>
+                                            </c:if>
                                 </ul>
                             </div>
                             <!-- End Top Right -->
@@ -126,11 +128,11 @@
                         <div class="col-lg-8 col-md-7 col-12">
                             <div class="search-bar-top">
                                 <div class="search-bar">
-                                     <select>
-                                            <option selected="selected">All Category</option>
-                                            <option>watch</option>
-                                            <option>mobile</option>
-                                            <option>kid’s item</option>
+                                    <select>
+                                        <option selected="selected">All Category</option>
+                                        <option>watch</option>
+                                        <option>mobile</option>
+                                        <option>kid’s item</option>
                                     </select> 
                                     <form>
                                         <input name="search" placeholder="Search Products Here....." type="search">
@@ -149,31 +151,51 @@
                                     <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                                 </div>
                                 <div class="sinlge-bar shopping">
-                                    <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
+                                    <a href="cart.jsp" class="single-icon"><i class="ti-bag"></i> <span id="total-count" class="total-count"><%
+                                        List<Cart> listC = (List<Cart>) session.getAttribute("listCart");
+                                        if (listC == null)
+                                            out.print("0");
+                                        else
+                                            out.print(listC.size());
+                                            %></span></a>
                                     <!-- Shopping Item -->
                                     <div class="shopping-item">
                                         <div class="dropdown-cart-header">
-                                            <span>2 Items</span>
-                                            <a href="#">View Cart</a>
+                                            <span id="total-cart"><%
+                                                if (listC == null)
+                                                    out.print("0");
+                                                else
+                                                    out.print(listC.size());
+                                                %> Items</span>
+                                            <a href="cart.jsp">View Cart</a>
                                         </div>
-                                        <ul class="shopping-list">
-                                            <li>
-                                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                                <h4><a href="#">Woman Ring</a></h4>
-                                                <p class="quantity">1x - <span class="amount">$99.00</span></p>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                                <h4><a href="#">Woman Necklace</a></h4>
-                                                <p class="quantity">1x - <span class="amount">$35.00</span></p>
-                                            </li>
+                                        <ul class="shopping-list" id="shopping-cart">
+                                            <c:forEach items="${listCart}" var="p">
+                                                <li class="car-item">
+
+                                                    <a onclick="deletecartitem(${p.product.id})" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+                                                    <a class="cart-img" href="productdetail?pid=${p.product.id}"><img src="${p.product.image}" alt="#"></a>
+                                                    <h4><a href="productdetail?pid=${p.product.id}">${p.product.title}</a></h4>
+                                                    <p class="quantity cart-quantity" id="cart-quantity" value="${p.quantity}">${p.quantity}x - <span class="amount cart-price" id="cart-price" value="${p.product.price}">$${p.product.price}</span> - <span class="size">Size ${p.size}</span></p>
+                                                </li>
+                                            </c:forEach>
+
                                         </ul>
                                         <div class="bottom">
                                             <div class="total">
                                                 <span>Total</span>
-                                                <span class="total-amount">$134.00</span>
+                                                <span id="total-amount" class="total-amount"><%
+                                                    int total = 0;
+                                                    if (listC == null)
+                                                        out.print("$ 0.0");
+                                                    else {
+                                                        for (Cart c : listC) {
+                                                            total += c.getAmount();
+                                                        }
+                                                        double toTal = (double) total;
+                                                        out.print("$ " + toTal);
+                                                    }
+                                                    %></span>
                                             </div>
                                             <a href="checkout.html" class="btn animate">Checkout</a>
                                         </div>
@@ -186,27 +208,27 @@
                 </div>
             </div>
 
-           
+
 
             <!-- Header Inner -->
             <div class="header-inner">
                 <div class="container">
                     <div class="cat-nav-head">
                         <div class="row">
-<!--                            <div class="col-lg-3">
-                                <div class="all-category">
-                                    <h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="true"></i>CATEGORIES</h3>
-                                    <ul class="main-category">
-                                        <li><a href="#">Adidas</a></li>
-                                        <li><a href="#">Nike</a></li>
-                                        <li><a href="#">Puma</a></li>
-                                        <li><a href="#">Vanz</a></li>
-                                        <li><a href="#">Converse</a></li>
-                                        <li><a href="#">New Balance</a></li>
-
-                                    </ul>
-                                </div>
-                            </div>-->
+                            <!--                            <div class="col-lg-3">
+                                                            <div class="all-category">
+                                                                <h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="true"></i>CATEGORIES</h3>
+                                                                <ul class="main-category">
+                                                                    <li><a href="#">Adidas</a></li>
+                                                                    <li><a href="#">Nike</a></li>
+                                                                    <li><a href="#">Puma</a></li>
+                                                                    <li><a href="#">Vanz</a></li>
+                                                                    <li><a href="#">Converse</a></li>
+                                                                    <li><a href="#">New Balance</a></li>
+                            
+                                                                </ul>
+                                                            </div>
+                                                        </div>-->
                             <div class="col-lg-9 col-12">
                                 <div class="menu-area">
                                     <!-- Main Menu -->
@@ -214,7 +236,7 @@
                                         <div class="navbar-collapse">	
                                             <div class="nav-inner">	
                                                 <ul class="nav main-menu menu navbar-nav">
-                                                    <li class="active"><a href="#">Home</a></li>
+                                                    <li class="active"><a href="home.jsp">Home</a></li>
                                                     <li><a href="shopmain">Shop</a>
 
                                                     </li>
@@ -225,9 +247,9 @@
                                                         </ul>
                                                     </li>
                                                     <li><a href="contact.html">Contact Us</a></li>
-                                                    <c:if test="${sessionScope.acc.isAdmin == 1}">
+                                                        <c:if test="${sessionScope.acc.isAdmin == 1}">
                                                         <li><a href="manager">Manage Products</a></li>
-                                                    </c:if>
+                                                        </c:if>
                                                 </ul>
                                             </div>
                                         </div>
@@ -257,7 +279,7 @@
                                             <h1><span>100% AUTHENTIC </span>Sneaker</h1>
                                             <p>Maboriosam in a nesciung eget magnae <br> dapibus disting tloctio in the find it pereri <br> odiy maboriosm.</p>
                                             <div class="button">
-                                                <a href="#" class="btn">Shop Now!</a>
+                                                <a href="shopmain" class="btn">Shop Now!</a>
                                             </div>
                                         </div>
                                     </div>
@@ -296,7 +318,7 @@
                                 </ul>
                                 <!--/ End Tab Nav -->
                             </div>
-                            
+
 
                             <div class="tab-content" id="myTabContent">
                                 <!-- Start Single Tab -->
@@ -318,7 +340,7 @@
                                                                     <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
                                                                 </div>
                                                                 <div class="product-action-2">
-                                                                    <a title="Add to cart" href="#">Add to cart</a>
+                                                                    <a title="Add to cart" onclick="addtocartquick(${o.id})">Add to cart</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -335,116 +357,182 @@
                                     </div>
                                 </div>
                                 <script>
-                                    function clickAdidas(){
-                                        
+                                    function addtocartquick(pid) {
+
+                                        $.ajax({
+                                            url: "/Webbangiay/addtocart",
+                                            type: "get", //send it through get method
+                                            data: {
+                                                pid: pid,
+                                                size: "S",
+                                                quantity: 1
+                                            },
+                                            success: function (data) {
+                                                //Do Something
+                                                var row = document.getElementById("shopping-cart");
+                                                row.innerHTML = data;
+                                                var carts = document.getElementsByClassName('cart-item');
+                                                document.getElementById('total-count').innerHTML = carts.length;
+                                                document.getElementById('total-cart').innerHTML = carts.length + " Items";
+                                                var total = 0;
+                                                var qtts = document.getElementsByClassName('cart-quantity');
+                                                var prices = document.getElementsByClassName('cart-price');
+                                                for (var i = 0; i < qtts.length; i++) {
+                                                    total += qtts[i].getAttribute('data-value') * prices[i].getAttribute('data-value');
+                                                }
+
+                                                document.getElementById('total-amount').innerHTML = "$ " + total + ".0";
+                                            },
+                                            error: function (xhr) {
+                                                //Do Something to handle error
+                                            }
+                                        });
+                                    }
+                                    function deletecartitem(pid) {
+
+//                var pid = ${p.product.id};
+//                var size = ${p.size};
+//                var quantity = ${p.product.quantity};
+
+                                        $.ajax({
+                                            url: "/Webbangiay/deletecartitem",
+                                            type: "get", //send it through get method
+                                            data: {
+                                                pid: pid,
+                                                
+//                        quantity: quantity
+                                            },
+                                            success: function (data) {
+                                                //Do Something
+                                                var row = document.getElementById("shopping-cart");
+                                                row.innerHTML = data;
+                                                var carts = document.getElementsByClassName('cart-item');
+                                                document.getElementById('total-count').innerHTML = carts.length;
+                                                document.getElementById('total-cart').innerHTML = carts.length + " Items";
+                                                var total = 0;
+                                                var qtts = document.getElementsByClassName('cart-quantity');
+                                                var prices = document.getElementsByClassName('cart-price');
+                                                for (var i = 0; i < qtts.length; i++) {
+                                                    total += qtts[i].getAttribute('data-value') * prices[i].getAttribute('data-value');
+                                                }
+
+                                                document.getElementById('total-amount').innerHTML = "$ " + total + ".0";
+                                            },
+                                            error: function (xhr) {
+                                                //Do Something to handle error
+                                            }
+                                        });
+                                    }
+                                    function clickAdidas() {
+
                                         $.ajax({
                                             url: "/Webbangiay/home",
                                             type: "get", //send it through get method
-                                            data: { 
-                                              cid: "1"
+                                            data: {
+                                                cid: "1"
                                             },
-                                            success: function(data) {
-                                              //Do Something
-                                              var row = document.getElementById("content");
-                                              row.innerHTML = data;
+                                            success: function (data) {
+                                                //Do Something
+                                                var row = document.getElementById("content");
+                                                row.innerHTML = data;
                                             },
-                                            error: function(xhr) {
-                                              //Do Something to handle error
+                                            error: function (xhr) {
+                                                //Do Something to handle error
                                             }
-                                          });
+                                        });
                                     }
-                                    function clickNike(){
-                                        
+                                    function clickNike() {
+
                                         $.ajax({
                                             url: "/Webbangiay/home",
                                             type: "get", //send it through get method
-                                            data: { 
-                                              cid: "2"
+                                            data: {
+                                                cid: "2"
                                             },
-                                            success: function(data) {
-                                              //Do Something
-                                              
-                                              var row = document.getElementById("content");
-                                              row.innerHTML = data;
+                                            success: function (data) {
+                                                //Do Something
+
+                                                var row = document.getElementById("content");
+                                                row.innerHTML = data;
                                             },
-                                            error: function(xhr) {
-                                              //Do Something to handle error
+                                            error: function (xhr) {
+                                                //Do Something to handle error
                                             }
-                                          });
+                                        });
                                     }
-                                    function clickPuma(){
-                                        
+                                    function clickPuma() {
+
                                         $.ajax({
                                             url: "/Webbangiay/home",
                                             type: "get", //send it through get method
-                                            data: { 
-                                              cid: "3"
+                                            data: {
+                                                cid: "3"
                                             },
-                                            success: function(data) {
-                                              //Do Something
-                                              var row = document.getElementById("content");
-                                              row.innerHTML = data;
+                                            success: function (data) {
+                                                //Do Something
+                                                var row = document.getElementById("content");
+                                                row.innerHTML = data;
                                             },
-                                            error: function(xhr) {
-                                              //Do Something to handle error
+                                            error: function (xhr) {
+                                                //Do Something to handle error
                                             }
-                                          });
+                                        });
                                     }
-                                    function clickVanz(){
-                                        
+                                    function clickVanz() {
+
                                         $.ajax({
                                             url: "/Webbangiay/home",
                                             type: "get", //send it through get method
-                                            data: { 
-                                              cid: "4"
+                                            data: {
+                                                cid: "4"
                                             },
-                                            success: function(data) {
-                                              //Do Something
-                                              var row = document.getElementById("content");
-                                              row.innerHTML = data;
+                                            success: function (data) {
+                                                //Do Something
+                                                var row = document.getElementById("content");
+                                                row.innerHTML = data;
                                             },
-                                            error: function(xhr) {
-                                              //Do Something to handle error
+                                            error: function (xhr) {
+                                                //Do Something to handle error
                                             }
-                                          });
+                                        });
                                     }
-                                    function clickConverse(){
-                                        
+                                    function clickConverse() {
+
                                         $.ajax({
                                             url: "/Webbangiay/home",
                                             type: "get", //send it through get method
-                                            data: { 
-                                              cid: "5"
+                                            data: {
+                                                cid: "5"
                                             },
-                                            success: function(data) {
-                                              //Do Something
-                                              var row = document.getElementById("content");
-                                              row.innerHTML = data;
+                                            success: function (data) {
+                                                //Do Something
+                                                var row = document.getElementById("content");
+                                                row.innerHTML = data;
                                             },
-                                            error: function(xhr) {
-                                              //Do Something to handle error
+                                            error: function (xhr) {
+                                                //Do Something to handle error
                                             }
-                                          });
+                                        });
                                     }
-                                    function clickNewBalance(){
-                                        
+                                    function clickNewBalance() {
+
                                         $.ajax({
                                             url: "/Webbangiay/home",
                                             type: "get", //send it through get method
-                                            data: { 
-                                              cid: "6"
+                                            data: {
+                                                cid: "6"
                                             },
-                                            success: function(data) {
-                                              //Do Something
-                                              var row = document.getElementById("content");
-                                              row.innerHTML = data;
+                                            success: function (data) {
+                                                //Do Something
+                                                var row = document.getElementById("content");
+                                                row.innerHTML = data;
                                             },
-                                            error: function(xhr) {
-                                              //Do Something to handle error
+                                            error: function (xhr) {
+                                                //Do Something to handle error
                                             }
-                                          });
+                                        });
                                     }
-                                    </script>
+                                </script>
                                 <!--
                                 <!--/ End Single Tab -->
                                 <!-- Start Single Tab -->
@@ -2174,25 +2262,25 @@
             </div>
         </div>
         <!-- Modal end -->
-                <script>
-                    function quickShop(id){
-                        $.ajax({
-                            url: "/Webbangiay/quickshop",
-                            type: "get", //send it through get method
-                            data: { 
-                              pid: id
-                            },
-                            success: function(data) {
-                              //Do Something
-                              var row = document.getElementById("exampleModal");
-                              row.innerHTML = data;
-                            },
-                            error: function(xhr) {
-                              //Do Something to handle error
-                            }
-                          });
+        <script>
+            function quickShop(id) {
+                $.ajax({
+                    url: "/Webbangiay/quickshop",
+                    type: "get", //send it through get method
+                    data: {
+                        pid: id
+                    },
+                    success: function (data) {
+                        //Do Something
+                        var row = document.getElementById("exampleModal");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
                     }
-                </script>
+                });
+            }
+        </script>
         <!-- Start Footer Area -->
         <footer class="footer">
             <!-- Footer Top -->
@@ -2287,7 +2375,7 @@
         <!-- /End Footer Area -->
 
         <!-- Jquery -->
-        
+
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-migrate-3.0.0.js"></script>
         <script src="js/jquery-ui.min.js"></script>
@@ -2319,91 +2407,91 @@
         <script src="js/easing.js"></script>
         <!-- Active JS -->
         <script src="js/active.js"></script>
-<!--         <script>
-                                    function loadProduct1(){
-                                       
-                                        $.ajax({
-                                        type: "get",
-                                        url: "/Webbangiay/home",
-                                        data: {
-                                            cid : 1;
-                                        }
-                                        success: function (data) {
-                                           var row = document.getElementById("content");
-                                           row.innerHTML = data;
-                                        }
-                                    });
-                                    }
-                                    function loadProduct2(){
-                                       
-                                        $.ajax({
-                                        type: "get",
-                                        url: "/Webbangiay/home",
-                                        data: {
-                                            cid : 2;
-                                        }
-                                        success: function (data) {
-                                           var row = document.getElementById("content");
-                                           row.innerHTML = data;
-                                        }
-                                    });
-                                    }
-                                    function loadProduct3(){
-                                       
-                                        $.ajax({
-                                        type: "get",
-                                        url: "/Webbangiay/home",
-                                        data: {
-                                            cid : 3;
-                                        }
-                                        success: function (data) {
-                                           var row = document.getElementById("content");
-                                           row.innerHTML = data;
-                                        }
-                                    });
-                                    }
-                                    function loadProduct4(){
-                                       
-                                        $.ajax({
-                                        type: "get",
-                                        url: "/Webbangiay/home",
-                                        data: {
-                                            cid : 4;
-                                        }
-                                        success: function (data) {
-                                           var row = document.getElementById("content");
-                                           row.innerHTML = data;
-                                        }
-                                    });
-                                    }
-                                    function loadProduct5(){
-                                       
-                                        $.ajax({
-                                        type: "get",
-                                        url: "/Webbangiay/home",
-                                        data: {
-                                            cid : 5;
-                                        }
-                                        success: function (data) {
-                                           var row = document.getElementById("content");
-                                           row.innerHTML = data;
-                                        }
-                                    });
-                                    }
-                                    function loadProduct6(){
-                                       
-                                        $.ajax({
-                                        type: "get",
-                                        url: "/Webbangiay/home",
-                                        data: {
-                                            cid : 6;
-                                        }
-                                        success: function (data) {
-                                           var row = document.getElementById("content");
-                                           row.innerHTML = data;
-                                        }
-                                    });
-                                    }
-                                </script>-->
+        <!--         <script>
+                                            function loadProduct1(){
+                                               
+                                                $.ajax({
+                                                type: "get",
+                                                url: "/Webbangiay/home",
+                                                data: {
+                                                    cid : 1;
+                                                }
+                                                success: function (data) {
+                                                   var row = document.getElementById("content");
+                                                   row.innerHTML = data;
+                                                }
+                                            });
+                                            }
+                                            function loadProduct2(){
+                                               
+                                                $.ajax({
+                                                type: "get",
+                                                url: "/Webbangiay/home",
+                                                data: {
+                                                    cid : 2;
+                                                }
+                                                success: function (data) {
+                                                   var row = document.getElementById("content");
+                                                   row.innerHTML = data;
+                                                }
+                                            });
+                                            }
+                                            function loadProduct3(){
+                                               
+                                                $.ajax({
+                                                type: "get",
+                                                url: "/Webbangiay/home",
+                                                data: {
+                                                    cid : 3;
+                                                }
+                                                success: function (data) {
+                                                   var row = document.getElementById("content");
+                                                   row.innerHTML = data;
+                                                }
+                                            });
+                                            }
+                                            function loadProduct4(){
+                                               
+                                                $.ajax({
+                                                type: "get",
+                                                url: "/Webbangiay/home",
+                                                data: {
+                                                    cid : 4;
+                                                }
+                                                success: function (data) {
+                                                   var row = document.getElementById("content");
+                                                   row.innerHTML = data;
+                                                }
+                                            });
+                                            }
+                                            function loadProduct5(){
+                                               
+                                                $.ajax({
+                                                type: "get",
+                                                url: "/Webbangiay/home",
+                                                data: {
+                                                    cid : 5;
+                                                }
+                                                success: function (data) {
+                                                   var row = document.getElementById("content");
+                                                   row.innerHTML = data;
+                                                }
+                                            });
+                                            }
+                                            function loadProduct6(){
+                                               
+                                                $.ajax({
+                                                type: "get",
+                                                url: "/Webbangiay/home",
+                                                data: {
+                                                    cid : 6;
+                                                }
+                                                success: function (data) {
+                                                   var row = document.getElementById("content");
+                                                   row.innerHTML = data;
+                                                }
+                                            });
+                                            }
+                                        </script>-->
     </body>
 </html>

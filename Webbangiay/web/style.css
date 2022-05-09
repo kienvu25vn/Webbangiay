@@ -2217,6 +2217,10 @@ Version:1.0
 	display: inline-block;
 	margin-right: 10px;
 }
+.shop .single-shorter a.active :hover{
+    color: #F7941D;
+	
+}
 .shop .single-shorter:last-child{
 	margin:0;
 }
@@ -2265,8 +2269,8 @@ Version:1.0
 	margin:0;
 }
 .shop .view-mode li a {
-	width: 43px;
-	height: 32px;
+	width: 18px;
+	height: 30px;
 	background: transparent;
 	border: 1px solid #77777775;
 	text-align: center;
@@ -2274,6 +2278,9 @@ Version:1.0
 	line-height: 32px;
 	color: #888;
 	border-radius: 0px;
+}
+.shop .view-mode li span.active {
+    color: #F7941D;
 }
 .shop .view-mode li.active a,
 .shop .view-mode li:hover a {
@@ -3323,7 +3330,7 @@ Version:1.0
 	font-weight: 400;
 	color: #333;
 }
-.shop.checkout .single-widget .checkbox {
+.shop.checkout .single-widget .payment-radio {
 	text-align: left;
 	margin: 0;
 	padding: 0px 30px;

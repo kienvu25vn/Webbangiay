@@ -1,5 +1,6 @@
 <%@page import="entity.Cart"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,7 +18,7 @@
         <link rel="icon" type="image/png" href="images/favicon.png">
         <!-- Web Font -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
         <!-- StyleSheet -->
 
         <!-- Bootstrap -->
@@ -30,8 +31,6 @@
         <link rel="stylesheet" href="css/jquery.fancybox.min.css">
         <!-- Themify Icons -->
         <link rel="stylesheet" href="css/themify-icons.css">
-        <!-- Jquery Ui -->
-        <link rel="stylesheet" href="css/jquery-ui.css">
         <!-- Nice Select CSS -->
         <link rel="stylesheet" href="css/niceselect.css">
         <!-- Animate CSS -->
@@ -54,13 +53,13 @@
     <body class="js">
 
         <!-- Preloader -->
-        <!--	<div class="preloader">
-                        <div class="preloader-inner">
-                                <div class="preloader-icon">
-                                        <span></span>
-                                        <span></span>
-                                </div>
+        <!--        <div class="preloader">
+                    <div class="preloader-inner">
+                        <div class="preloader-icon">
+                            <span></span>
+                            <span></span>
                         </div>
+                    </div>
                 </div>-->
         <!-- End Preloader -->
 
@@ -172,8 +171,8 @@
                                         <ul class="shopping-list" id="shopping-cart">
                                             <c:forEach items="${listCart}" var="p">
                                                 <li class="car-item">
-                                    
-                                                    <a onclick="deletecartitem(${p.product.id} )" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+
+                                                    <a onclick="deletecartitem(${p.product.id}, ${p.size})" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
                                                     <a class="cart-img" href="productdetail?pid=${p.product.id}"><img src="${p.product.image}" alt="#"></a>
                                                     <h4><a href="productdetail?pid=${p.product.id}">${p.product.title}</a></h4>
                                                     <p class="quantity cart-quantity" id="cart-quantity" value="${p.quantity}">${p.quantity}x - <span class="amount cart-price" id="cart-price" value="${p.product.price}">$${p.product.price}</span> - <span class="size">Size ${p.size}</span></p>
@@ -272,8 +271,8 @@
                     <div class="col-12">
                         <div class="bread-inner">
                             <ul class="bread-list">
-                                <li><a href="shopmain"> Shop<i class="ti-arrow-right"></i></a></li>
-                                <li class="active"><a href="blog-single.html">${tag}</a></li>
+                                <li><a href="shopmain">Shop<i class="ti-arrow-right"></i></a></li>
+                                <li class="active"><a href="cart.jsp">Cart</a></li>
                             </ul>
                         </div>
                     </div>
@@ -281,261 +280,199 @@
             </div>
         </div>
         <!-- End Breadcrumbs -->
-        <p  data-value="${tagID}" id="tagID" style="display: none;">${tagID}</p>
-        <!-- Product Style -->
-        <section class="product-area shop-sidebar shop section">
+
+        <!-- Shopping Cart -->
+        <div class="shopping-cart section">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3 col-md-4 col-12">
-                        <div class="shop-sidebar">
-                            <!-- Single Widget -->
-                            <div class="single-widget category">
-                                <h3 class="title">Categories</h3>
-                                <ul class="categor-list"  >
-                                    <c:forEach items="${listCategory}" var="o">
-                                        <li><a href="category?cid=${o.cid}" ${tagID == o.cid ? "style=\"color: #F7941D;\"" : ""}">${o.cname}</a></li>
-                                        </c:forEach>
-
-                                </ul>
-                            </div>
-                            <!--/ End Single Widget -->
-                            <!-- Shop By Price -->
-                            <div class="single-widget range">
-                                <h3 class="title">Price</h3>
-                                <!--										<div class="price-filter">
-                                                                                                                        <div class="price-filter-inner">
-                                                                                                                                <div id="slider-range"></div>
-                                                                                                                                        <div class="price_slider_amount">
-                                                                                                                                        <div class="label-input">
-                                                                                                                                                <span>Range:</span><input type="text" id="amount" name="price" placeholder="Add Your Price"/>
-                                                                                                                                        </div>
-                                                                                                                                </div>
-                                                                                                                        </div>
-                                                                                                                </div>-->
-                                <ul class="check-box-list">
-                                    <li>
-                                        <label class="checkbox-inline" for="0"><input onchange="sortProduct(1,${tagID})" name="priceP" id="0" type="radio" value="all" checked>All</label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="1"><input onchange="sortProduct(1,${tagID})" name="priceP" id="1" type="radio" value="100">$100 - $300</label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="2"><input onchange="sortProduct(1,${tagID})" name="priceP" id="2" type="radio" value="300">$300 - $500</label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="3"><input onchange="sortProduct(1,${tagID})" name="priceP" id="3" type="radio" value="500">$500 - $700</label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="4"><input onchange="sortProduct(1,${tagID})" name="priceP" id="4" type="radio" value="700">> $700</label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="single-widget range">
-                                <h3 class="title">Color</h3>
-                                <ul class="check-box-list">
-                                    <li>
-                                        <label class="checkbox-inline" for="c0"><input onchange="sortProduct(1,${tagID})" name="color" id="c0" type="radio" value="all" checked>All</label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="c1"><input onchange="sortProduct(1,${tagID})" name="color" id="c1" type="radio" value="white"><span style="background: #fff;height: 14px; width: 14px;border-radius: 50% ;color: transparent" >ab</span><span class="color-des">&nbsp;White</span></label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="c2"><input onchange="sortProduct(1,${tagID})" name="color" id="c2" type="radio" value="black"><span style="background: #000;height: 14px; width: 14px;border-radius: 50% ;color: transparent" >ab</span><span class="color-des">&nbsp;Black</span></label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="c3"><input onchange="sortProduct(1,${tagID})" name="color" id="c3" type="radio" value="yellow"><span style="background: #ff0;height: 14px; width: 14px;border-radius: 50% ;color: transparent" >ab</span><span class="color-des">&nbsp;Yellow</span></label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="c4"><input onchange="sortProduct(1,${tagID})" name="color" id="c4" type="radio" value="red"><span style="background: #ff0000;height: 14px; width: 14px;border-radius: 50% ;color: transparent" >ab</span><span class="color-des">&nbsp;Red</span></label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="c5"><input onchange="sortProduct(1,${tagID})" name="color" id="c5" type="radio" value="green"><span style="background: #00ff00;height: 14px; width: 14px;border-radius: 50% ;color: transparent" >ab</span><span class="color-des">&nbsp;Green</span></label>
-                                    </li> 
-                                    <li>
-                                        <label class="checkbox-inline" for="c6"><input onchange="sortProduct(1,${tagID})" name="color" id="c6" type="radio" value="grey"><span style="background: #eee;height: 14px; width: 14px;border-radius: 50% ;color: transparent">ab</span><span class="color-des">&nbsp;Grey</span></label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!--/ End Shop By Price -->
-                            <!-- Single Widget -->
-                            <div class="single-widget recent-post">
-                                <h3 class="title">Recent post</h3>
-                                <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
-                                    </div>
-                                    <div class="content">
-                                        <h5><a href="#">Girls Dress</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Single Post -->
-                                <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
-                                    </div>
-                                    <div class="content">
-                                        <h5><a href="#">Women Clothings</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Single Post -->
-                                <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
-                                    </div>
-                                    <div class="content">
-                                        <h5><a href="#">Man Tshirt</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Single Post -->
-                            </div>
-                            <!--/ End Single Widget -->
-                            <!-- Single Widget -->
-                            <!--								<div class="single-widget category">
-                                                                                                    <h3 class="title">Manufacturers</h3>
-                                                                                                    <ul class="categor-list">
-                                                                                                            <li><a href="#">Forever</a></li>
-                                                                                                            <li><a href="#">giordano</a></li>
-                                                                                                            <li><a href="#">abercrombie</a></li>
-                                                                                                            <li><a href="#">ecko united</a></li>
-                                                                                                            <li><a href="#">zara</a></li>
-                                                                                                    </ul>
-                                                                                            </div>-->
-                            <!--/ End Single Widget -->
-                        </div>
-                    </div>
-                    <div class="col-lg-9 col-md-8 col-12">
-                        <div class="row">
-                            <div class="col-12">
-                                <!--show top-->
-                                <div class="shop-top">
-                                    <div class="shop-shorter">
-
-
-                                        <div class="single-shorter">
-                                            <label>Sort By :</label>
-
-                                            <select id="sortOption" onchange="sortProduct(${tagID})">
-                                                <option value="none">None</option>
-                                                <option value="title">Name</option>
-                                                <option value="price">Price</option>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="single-shorter">
-                                            <label id="searchfor"></label>
-                                        </div>   
-
-                                    </div>
-                                    <ul class="view-mode">
-
-                                        <li><a id="lastpage" onclick="lastpage()"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
-
-
-                                        <li><span class="active" id="pagetag">${pagetag}</span><span>/</span><span id="pagetags">${pagetags}</span></li>
-
-                                        <li><a id="nextpage" onclick="nextpage()"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-
-
-                                    </ul>
-
-                                </div>
-                                <!--								/ End Shop Top -->
-                            </div>
-                        </div>
-                        <div id="productView" class="row">
-                            <c:forEach items="${listP}" var="o">
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <div class="single-product">
-                                        <div class="product-img">
-                                            <a href="productdetail?pid=${o.id}&tag=${tag}">
-                                                <img class="default-img" src="${o.image}" alt="#">
-                                                <img class="hover-img" src="${o.image}" alt="#">
-                                            </a>
-                                            <div class="button-head">
-                                                <div class="product-action">
-                                                    <input type="hidden" value="${o.id}">
-                                                    <a data-toggle="modal" data-target="#exampleModal" title="Quick View" onclick="quickShop(${o.id})"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                                    <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                                    <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+                    <div class="col-12">
+                        <!-- Shopping Summery -->
+                        <table class="table shopping-summery">
+                            <thead>
+                                <tr class="main-hading">
+                                    <th>PRODUCT</th>
+                                    <th>NAME</th>
+                                    <th class="text-center">UNIT PRICE</th>
+                                    <th class="text-center">QUANTITY</th>
+                                    <th class="text-center">TOTAL</th> 
+                                    <th class="text-center"><i class="ti-trash remove-icon"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${listCart}" var="p">
+                                    <tr>
+                                        <td class="image" data-title="No"><img src="${p.product.image}" alt="#"></td>
+                                        <td class="product-des" data-title="Description">
+                                            <p class="product-name"><a href="">${p.product.title}</a></p>
+                                            <p class="product-des">${p.product.description}</p>
+                                        </td>
+                                        <td class="price" data-title="Price"><span>$${p.product.price} </span></td>
+                                        <td class="qty" data-title="Qty"><!-- Input Order -->
+                                            <div class="input-group">
+                                                <div class="button minus">
+                                                    <button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="${p.product.id}">
+                                                        <i class="ti-minus"></i>
+                                                    </button>
                                                 </div>
-                                                <div class="product-action-2">
-                                                    <a title="Add to cart" onclick="addtocartquick(${o.id})">Add to cart</a>
+                                                <input type="text" name="${p.product.id}" class="input-number"  data-min="1" data-max="100" value="${p.quantity}">
+                                                <div class="button plus">
+                                                    <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="${p.product.id}">
+                                                        <i class="ti-plus"></i>
+                                                    </button>
                                                 </div>
                                             </div>
+                                            <!--/ End Input Order -->
+                                        </td>
+                                        <td class="total-amount" data-title="Total"><span>${p.product.price * p.quantity}
+                                            </span></td>
+                                        <td class="action" data-title="Remove"><a href="#"><i class="ti-trash remove-icon"></i></a></td>
+                                    </tr>
+                                </c:forEach>
+
+
+                            </tbody>
+                        </table>
+                        <!--/ End Shopping Summery -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Total Amount -->
+                        <div class="total-amount">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-5 col-12">
+                                    <div class="left">
+                                        <div class="coupon">
+                                            <form action="#" target="_blank">
+                                                <input name="Coupon" placeholder="Enter Your Coupon">
+                                                <button class="btn">Apply</button>
+                                            </form>
                                         </div>
-                                        <div class="product-content">
-                                            <h3><a href="product-details.html">${o.title}</a></h3>
-                                            <div class="product-price">
-                                                <span>${o.price}$</span>
-                                            </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-7 col-12">
+                                    <div class="right">
+                                        <ul>
+                                            <li>Cart Subtotal<span><%
+                                                if (listC == null)
+                                                    out.print("$ 0.0");
+                                                else {
+
+                                                    double toTal = (double) total;
+                                                    out.print("$ " + toTal);
+                                                }
+                                                    %></span></li>
+                                            <li>Shipping<span><%
+                                                int shipping = 0;
+                                                if(total < 500){
+                                                    out.print("$"+10.0);
+                                                    shipping = 10;
+                                                }
+                                                else{
+                                                    out.print("Free");
+                                                    shipping = 0;
+                                                }
+                                                    %></span></li>
+                                            <!--                                            <li>You Save<span>$20.00</span></li>-->
+                                            <li class="last">You Pay<span><%
+                                                if (listC == null)
+                                                    out.print("$ 0.0");
+                                                else {
+
+                                                    double toTal = (double) total;
+                                                    toTal = toTal + (double) shipping;
+                                                    out.print("$ " + toTal);
+                                                }
+                                                    %></span></li>
+                                        </ul>
+                                        <div class="button5">
+                                            <a href="checkout.jsp" class="btn">Checkout</a>
+                                            <a href="shopmain" class="btn">Continue shopping</a>
                                         </div>
                                     </div>
                                 </div>
-                            </c:forEach>
-
+                            </div>
                         </div>
+                        <!--/ End Total Amount -->
                     </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End Shopping Cart -->
 
+        <!-- Start Shop Services Area  -->
+        <section class="shop-services section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Start Single Service -->
+                        <div class="single-service">
+                            <i class="ti-rocket"></i>
+                            <h4>Free shiping</h4>
+                            <p>Orders over $500</p>
+                        </div>
+                        <!-- End Single Service -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Start Single Service -->
+                        <div class="single-service">
+                            <i class="ti-reload"></i>
+                            <h4>Free Return</h4>
+                            <p>Within 30 days returns</p>
+                        </div>
+                        <!-- End Single Service -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Start Single Service -->
+                        <div class="single-service">
+                            <i class="ti-lock"></i>
+                            <h4>Sucure Payment</h4>
+                            <p>100% secure payment</p>
+                        </div>
+                        <!-- End Single Service -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Start Single Service -->
+                        <div class="single-service">
+                            <i class="ti-tag"></i>
+                            <h4>Best Peice</h4>
+                            <p>Guaranteed price</p>
+                        </div>
+                        <!-- End Single Service -->
+                    </div>
                 </div>
             </div>
         </section>
-        <!--/ End Product Style 1  -->	
+        <!-- End Shop Newsletter -->
 
         <!-- Start Shop Newsletter  -->
-        <!--		<section class="shop-newsletter section">
-                                <div class="container">
-                                        <div class="inner-top">
-                                                <div class="row">
-                                                        <div class="col-lg-8 offset-lg-2 col-12">
-                                                                 Start Newsletter Inner 
-                                                                <div class="inner">
-                                                                        <h4>Newsletter</h4>
-                                                                        <p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-                                                                        <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-                                                                                <input name="EMAIL" placeholder="Your email address" required="" type="email">
-                                                                                <button class="btn">Subscribe</button>
-                                                                        </form>
-                                                                </div>
-                                                                 End Newsletter Inner 
-                                                        </div>
-                                                </div>
-                                        </div>
-                                </div>
-                        </section>-->
+        <section class="shop-newsletter section">
+            <div class="container">
+                <div class="inner-top">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2 col-12">
+                            <!-- Start Newsletter Inner -->
+                            <div class="inner">
+                                <h4>Newsletter</h4>
+                                <p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
+                                <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                                    <input name="EMAIL" placeholder="Your email address" required="" type="email">
+                                    <button class="btn">Subscribe</button>
+                                </form>
+                            </div>
+                            <!-- End Newsletter Inner -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- End Shop Newsletter -->
 
 
 
         <!-- Modal -->
-        <div  class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -548,16 +485,16 @@
                                 <div class="product-gallery">
                                     <div class="quickview-slider-active">
                                         <div class="single-slider">
-                                            <img src="https://via.placeholder.com/569x528" alt="#">
+                                            <img src="images/modal1.jpg" alt="#">
                                         </div>
                                         <div class="single-slider">
-                                            <img src="https://via.placeholder.com/569x528" alt="#">
+                                            <img src="images/modal2.jpg" alt="#">
                                         </div>
                                         <div class="single-slider">
-                                            <img src="https://via.placeholder.com/569x528" alt="#">
+                                            <img src="images/modal3.jpg" alt="#">
                                         </div>
                                         <div class="single-slider">
-                                            <img src="https://via.placeholder.com/569x528" alt="#">
+                                            <img src="images/modal4.jpg" alt="#">
                                         </div>
                                     </div>
                                 </div>
@@ -596,7 +533,15 @@
                                                     <option>xl</option>
                                                 </select>
                                             </div>
-
+                                            <div class="col-lg-6 col-12">
+                                                <h5 class="title">Color</h5>
+                                                <select>
+                                                    <option selected="selected">orange</option>
+                                                    <option>purple</option>
+                                                    <option>black</option>
+                                                    <option>pink</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="quantity">
@@ -639,228 +584,6 @@
         </div>
         <!-- Modal end -->
 
-        <script>
-            function addtocartquick(pid) {
-
-                $.ajax({
-                    url: "/Webbangiay/addtocart",
-                    type: "get", //send it through get method
-                    data: {
-                        pid: pid,
-                        size: "S",
-                        quantity: 1
-                    },
-                    success: function (data) {
-                        //Do Something
-                        var row = document.getElementById("shopping-cart");
-                        row.innerHTML = data;
-                        var carts = document.getElementsByClassName('cart-item');
-                        document.getElementById('total-count').innerHTML = carts.length;
-                        document.getElementById('total-cart').innerHTML = carts.length + " Items";
-                        var total = 0;
-                        var qtts = document.getElementsByClassName('cart-quantity');
-                        var prices = document.getElementsByClassName('cart-price');
-                        for(var i = 0;i<qtts.length;i++){
-                            total += qtts[i].getAttribute('data-value') * prices[i].getAttribute('data-value');
-                        }
-                        
-                        document.getElementById('total-amount').innerHTML = "$ "+total+".0";
-                    },
-                    error: function (xhr) {
-                        //Do Something to handle error
-                    }
-                });
-            }
-            function deletecartitem(pid ){
-                
-//                var pid = ${p.product.id};
-//                var size = ${p.size};
-//                var quantity = ${p.product.quantity};
-                
-                $.ajax({
-                    url: "/Webbangiay/deletecartitem",
-                    type: "get", //send it through get method
-                    data: {
-                        pid: pid,
-                       
-//                        quantity: quantity
-                    },
-                    success: function (data) {
-                        //Do Something
-                        var row = document.getElementById("shopping-cart");
-                        row.innerHTML = data;
-                        var carts = document.getElementsByClassName('cart-item');
-                        document.getElementById('total-count').innerHTML = carts.length;
-                        document.getElementById('total-cart').innerHTML = carts.length + " Items";
-                        var total = 0;
-                        var qtts = document.getElementsByClassName('cart-quantity');
-                        var prices = document.getElementsByClassName('cart-price');
-                        for(var i = 0;i<qtts.length;i++){
-                            total += qtts[i].getAttribute('data-value') * prices[i].getAttribute('data-value');
-                        }
-                        
-                        document.getElementById('total-amount').innerHTML = "$ "+total+".0";
-                    },
-                    error: function (xhr) {
-                        //Do Something to handle error
-                    }
-                });
-            }
-            function nextpage() {
-                var pagetag = Number(document.getElementById('pagetag').innerHTML);
-                var pagetags = Number(document.getElementById('pagetags').innerHTML);
-                if (pagetag < pagetags) {
-                    document.getElementById('pagetag').innerHTML = pagetag + 1;
-                    sortProduct(2,${tagID});
-                }
-
-            }
-            function lastpage() {
-                var pagetag = Number(document.getElementById('pagetag').innerHTML);
-
-                if (pagetag > 1) {
-                    document.getElementById('pagetag').innerHTML = pagetag - 1;
-                    sortProduct(2,${tagID});
-                }
-
-            }
-            function quickShop(id) {
-                $.ajax({
-                    url: "/Webbangiay/quickshop",
-                    type: "get", //send it through get method
-                    data: {
-                        pid: id
-                    },
-                    success: function (data) {
-                        //Do Something
-                        var row = document.getElementById("exampleModal");
-                        row.innerHTML = data;
-                    },
-                    error: function (xhr) {
-                        //Do Something to handle error
-                    }
-                });
-            }
-            function sortProduct(change, tagID) {
-                var pagetag = 1;
-                if (change === 2) {
-                    pagetag = document.getElementById('pagetag').innerHTML;
-                } else {
-                    document.getElementById('pagetag').innerHTML = 1;
-                }
-
-
-
-                var sortBy = document.getElementById('sortOption').value;
-                var Price = "";
-                var Color = "";
-                var PriceInput = document.getElementsByName("priceP");
-                for (var i = 0; i < PriceInput.length; i++) {
-                    if (PriceInput[i].checked === true) {
-                        Price = PriceInput[i].value;
-                        break;
-                    }
-                }
-                var ColorInput = document.getElementsByName("color");
-                for (var i = 0; i < ColorInput.length; i++) {
-                    if (ColorInput[i].checked === true) {
-                        Color = ColorInput[i].value;
-                        break;
-                    }
-                }
-
-                $.ajax({
-                    url: "/Webbangiay/sortproduct",
-                    type: "get", //send it through get method
-                    data: {
-                        cid: tagID,
-                        sortName: sortBy,
-                        price: Price,
-                        color: Color
-
-                    },
-                    success: function (data) {
-                        //Do Something
-
-                        var row = document.getElementById("productView");
-                        row.innerHTML = data;
-
-                        var arr = document.getElementsByClassName('single-p');
-
-                        if (arr.length <= 9) {
-                            document.getElementById('pagetags').innerHTML = 1;
-
-                        } else {
-                            var pt = Number(pagetag);
-                            var len = arr.length;
-                            if (len % 9 == 0) {
-                                document.getElementById('pagetags').innerHTML = len / 9;
-                            } else {
-
-                                document.getElementById('pagetags').innerHTML = Math.floor(len / 9) + 1;
-
-                            }
-                            var data1 = "";
-                            if (pt <= Math.floor(len / 9)) {
-                                for (var i = (Number(pagetag) - 1) * 9; i < Number(pagetag) * 9; i++) {
-                                    data1 += arr[i].outerHTML;
-                                }
-                            } else {
-                                for (var i = (pt - 1) * 9; i < len; i++) {
-                                    data1 += arr[i].outerHTML;
-                                }
-                            }
-                            row.innerHTML = data1;
-
-                        }
-
-                    },
-                    error: function (xhr) {
-                        //Do Something to handle error
-                    }
-                });
-            }
-            function autoSearch(search, tagID) {
-
-                var Price = "";
-                var Color = "";
-                var PriceInput = document.getElementsByName("priceP");
-                for (var i = 0; i < PriceInput.length; i++) {
-                    if (PriceInput[i].checked === true) {
-                        Price = PriceInput[i].value;
-                        break;
-                    }
-                }
-                var ColorInput = document.getElementsByName("color");
-                for (var i = 0; i < ColorInput.length; i++) {
-                    if (ColorInput[i].checked === true) {
-                        Color = ColorInput[i].value;
-                        break;
-                    }
-                }
-                document.getElementById('searchfor').innerHTML = "Search for: " + search.value;
-                $.ajax({
-                    url: "/Webbangiay/autosearch",
-                    type: "get", //send it through get method
-                    data: {
-                        cid: tagID,
-                        search: search.value,
-                        price: Price,
-                        color: Color
-                    },
-                    success: function (data) {
-                        //Do Something
-
-                        var row = document.getElementById("productView");
-                        row.innerHTML = data;
-
-                    },
-                    error: function (xhr) {
-                        //Do Something to handle error
-                    }
-                });
-            }
-        </script>
         <!-- Start Footer Area -->
         <footer class="footer">
             <!-- Footer Top -->
@@ -953,7 +676,6 @@
             </div>
         </footer>
         <!-- /End Footer Area -->
-
 
         <!-- Jquery -->
         <script src="js/jquery.min.js"></script>

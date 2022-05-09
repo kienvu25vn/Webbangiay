@@ -45,7 +45,7 @@ public class LoginControl extends HttpServlet {
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("acc", a);
-            session.setMaxInactiveInterval(1000);
+            session.setMaxInactiveInterval(60*60*24);
             response.sendRedirect("start");
         }
         

@@ -1,27 +1,23 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package control;
 
 import dao.DAO;
-//import entity.Account;
+import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author trinh
+ * @author Admin
  */
-@WebServlet(name = "AddControl", urlPatterns = {"/add"})
-public class AddControl extends HttpServlet {
+public class ProductDetailControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,23 +31,22 @@ public class AddControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        String pname = request.getParameter("name");
-        String ptitle = request.getParameter("title");
-        String pdescription = request.getParameter("description");
-        double pprice = Double.parseDouble(request.getParameter("price"));
-        String pimage = request.getParameter("image");
-        String pcolor = request.getParameter("color");
-        int pamount = Integer.parseInt(request.getParameter("amount"));
-        int psize1 = Integer.parseInt(request.getParameter("size1"));
-        int psize2 = Integer.parseInt(request.getParameter("size2"));
-        int psize3 = Integer.parseInt(request.getParameter("size3"));
-        int pcategory = Integer.parseInt(request.getParameter("category"));
-//        HttpSession session = request.getSession();
-        DAO dao = new DAO();
-        dao.insertProduct(pname, ptitle, pdescription, pprice, pimage, pcolor,
-                pamount, psize1, psize2, psize3, pcategory);
-        response.sendRedirect("manager");
+        try {
+
+            DAO dao = new DAO();
+            String pid = request.getParameter("pid");
+            Product p = dao.getProductById(pid);
+            String tag = request.getParameter("tag");
+            if (tag == null) {
+                tag = "All Products";
+            }
+            request.setAttribute("TAG", tag);
+            request.setAttribute("prodetail", p);
+            request.setAttribute("tagDetail", p.getTitle());
+            request.setAttribute("proCid", "category?cid=" + dao.getCidProduct(p.getId() + ""));
+            request.getRequestDispatcher("shopdetail.jsp").forward(request, response);
+        } catch (Exception e) {
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -41,7 +41,7 @@ public class DAO {
         }
         return list;
     }
-    
+
     public Product getProductById(String id) {
 
         String query = "select * from sanpham where id = ?";
@@ -53,6 +53,20 @@ public class DAO {
             while (rs.next()) {
                 return new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7));
             }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public String getCidProduct(String id) {
+        String query = "select cid from sanpham where id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            rs.next();
+            return rs.getString(1);
         } catch (Exception e) {
         }
         return null;
@@ -125,22 +139,22 @@ public class DAO {
         return cname;
     }
 
-    public List<Product> getProductsByColor(String color) {
-        List<Product> list = new ArrayList<>();
-        String query = "select * from sanpham where color = ?";
-
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, color);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
-            }
-        } catch (Exception e) {
-        }
-        return list;
-    }
+//    public List<Product> getProductsByColor(String color) {
+//        List<Product> list = new ArrayList<>();
+//        String query = "select * from sanpham where color = ?";
+//
+//        try {
+//            conn = new DBContext().getConnection();
+//            ps = conn.prepareStatement(query);
+//            ps.setString(1, color);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                list.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7)));
+//            }
+//        } catch (Exception e) {
+//        }
+//        return list;
+//    }
     public List<Product> getProductsByCidAndPriceAndColor(String Cid, String price, String color) {
         if (Cid == null) {
             if (price.equals("all")) {
@@ -272,7 +286,7 @@ public class DAO {
                         } else {
                             query = "select * from sanpham where cid= ? and price >= 700 ";
                             ps = conn.prepareStatement(query);
-                            ps.setString(1,Cid);
+                            ps.setString(1, Cid);
                         }
                         rs = ps.executeQuery();
 
@@ -288,7 +302,7 @@ public class DAO {
         }
         return null;
     }
-    
+
     public void deleteProduct(String pid) {
         String query = "delete from sanpham\n"
                 + "where id = ?";
@@ -305,7 +319,7 @@ public class DAO {
             double price, String image, String color, int amount,
             int size1, int size2, int size3, int cid) {
         String query = "INSERT INTO `sanpham`\n"
-                +"(name,title,description,price,image,color,amount,size1,size2,size3,cid)\n"
+                + "(name,title,description,price,image,color,amount,size1,size2,size3,cid)\n"
                 + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         try {
             conn = new DBContext().getConnection();//mo ket noi voi sql
@@ -352,6 +366,7 @@ public class DAO {
         } catch (Exception e) {
         }
     }
+
     public Account login(String user, String pass) {
         String query = "select * from account\n"
                 + "where user = ?\n"
@@ -372,6 +387,7 @@ public class DAO {
         }
         return null;
     }
+
     public Account checkAccountExist(String user) {
         String query = "select * from account\n"
                 + "where user = ?\n";
@@ -403,7 +419,8 @@ public class DAO {
         } catch (Exception e) {
         }
     }
-//    public static void main(String[] args) {
-//        System.out.print();
-//    }
+
+    public static void main(String[] args) {
+        System.out.print(new DAO().getCidProduct("1"));
+    }
 }
