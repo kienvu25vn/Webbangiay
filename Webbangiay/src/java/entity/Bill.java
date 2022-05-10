@@ -8,28 +8,34 @@ package entity;
  *
  * @author Admin
  */
-import java.util.*;
 public class Bill {
-    int id , idUser;
-    List<Cart> listCart;
-    Date createDate;
+    private int idBill , idUser , total ;
+    private String email , adrress ;
 
     public Bill() {
     }
 
-    public Bill(int id, int idUser, List<Cart> listCart, Date createDate) {
-        this.id = id;
+    public Bill(int idBill, int idUser, int total, String email, String adrress) {
+        this.idBill = idBill;
         this.idUser = idUser;
-        this.listCart = listCart;
-        this.createDate = createDate;
+        this.total = total;
+        this.email = email;
+        this.adrress = adrress;
     }
 
-    public int getId() {
-        return id;
+    public Bill(int idUser, int total, String email, String adrress) {
+        this.idUser = idUser;
+        this.total = total;
+        this.email = email;
+        this.adrress = adrress;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getIdBill() {
+        return idBill;
+    }
+
+    public void setIdBill(int idBill) {
+        this.idBill = idBill;
     }
 
     public int getIdUser() {
@@ -40,20 +46,29 @@ public class Bill {
         this.idUser = idUser;
     }
 
-    public List<Cart> getListCart() {
-        return listCart;
+    public int getTotal() {
+        return total;
     }
 
-    public void setListCart(List<Cart> listCart) {
-        this.listCart = listCart;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+    public String getAdrress() {
+        return adrress;
+    }
+
+    public void setAdrress(String adrress) {
+        this.adrress = adrress;
+    }
+
 
 }

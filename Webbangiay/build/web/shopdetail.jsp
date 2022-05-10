@@ -42,7 +42,7 @@
         <link rel="stylesheet" href="css/owl-carousel.css">
         <!-- Slicknav -->
         <link rel="stylesheet" href="css/slicknav.min.css">
-
+        <link rel="stylesheet" href="css/review.css">
         <!-- Eshop StyleSheet -->
         <link rel="stylesheet" href="css/reset.css">
         <link rel="stylesheet" href="style.css">
@@ -86,8 +86,13 @@
                                 <ul class="list-main">
                                     <!-- <li><i class="ti-location-pin"></i> Store location</li>
                                     <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li> -->
-                                    <li><i class="ti-user"></i> <a href="#">My account</a></li>
-                                    <li><i class="ti-power-off"></i><a href="login.html#">Login</a></li>
+                                    <c:if test="${sessionScope.acc != null}">
+                                        <li><i class="ti-user"></i>Hello ${sessionScope.acc.user}</li>
+                                        <li><i class="ti-power-off"></i><a href="logout">Logout</a></li>
+                                            </c:if>
+                                            <c:if test="${sessionScope.acc == null}">
+                                        <li><i class="ti-power-off"></i><a href="Login.jsp">Login</a></li>
+                                            </c:if>
                                 </ul>
                             </div>
                             <!-- End Top Right -->
@@ -162,16 +167,16 @@
                                                 else
                                                     out.print(listC.size());
                                                 %> Items</span>
-                                            <a href="cart.html">View Cart</a>
+                                            <a href="cart.jsp">View Cart</a>
                                         </div>
                                         <ul class="shopping-list" id="shopping-cart">
-                                             <c:forEach items="${listCart}" var="p">
+                                            <c:forEach items="${listCart}" var="p">
                                                 <li>
-                                                <a onclick="deletecartitem(${p.product.id} , ${p.size})" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="productdetail?pid=${p.product.id}"><img src="${p.product.image}" alt="#"></a>
-                                                <h4><a href="productdetail?pid=${p.product.id}">${p.product.title}</a></h4>
-                                                <p class="quantity">${p.quantity}x - <span class="amount">$${p.product.price}</span> - <span class="size">Size ${p.size}</span></p>
-                                            </li>
+                                                    <a onclick="deletecartitem(${p.product.id}, ${p.size})" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+                                                    <a class="cart-img" href="productdetail?pid=${p.product.id}"><img src="${p.product.image}" alt="#"></a>
+                                                    <h4><a href="productdetail?pid=${p.product.id}">${p.product.title}</a></h4>
+                                                    <p class="quantity">${p.quantity}x - <span class="amount">$${p.product.price}</span> - <span class="size">Size ${p.size}</span></p>
+                                                </li>
                                             </c:forEach>
                                         </ul>
                                         <div class="bottom">
@@ -190,7 +195,7 @@
                                                     }
                                                     %></span>
                                             </div>
-                                            <a href="checkout.html" class="btn animate">Checkout</a>
+                                            <a href="checkout.jsp" class="btn animate">Checkout</a>
                                         </div>
                                     </div>
                                     <!--/ End Shopping Item -->
@@ -239,6 +244,9 @@
                                                         </ul>
                                                     </li>
                                                     <li><a href="contact.html">Contact Us</a></li>
+                                                        <c:if test="${sessionScope.acc.isAdmin == 1}">
+                                                        <li><a href="manager">Manage Products</a></li>
+                                                        </c:if>
                                                 </ul>
                                             </div>
                                         </div>
@@ -262,13 +270,13 @@
                         <div class="bread-inner">
                             <ul class="bread-list">
                                 <li><a href="shopmain"> Shop<i class="ti-arrow-right"></i></a></li>
-                                <c:if test = "${TAG == 'All Products'}">
-                                     <li class="active"><a href="shopmain">${TAG}<i class="ti-arrow-right"></i></a></li>
-                                </c:if>
-                                <c:if test = "${TAG != 'All Products'}">
-                                     <li class="active"><a href="${proCid}">${TAG}<i class="ti-arrow-right"></i></a></li>
-                                </c:if>
-                                
+                                        <c:if test = "${TAG == 'All Products'}">
+                                    <li class="active"><a href="shopmain">${TAG}<i class="ti-arrow-right"></i></a></li>
+                                        </c:if>
+                                        <c:if test = "${TAG != 'All Products'}">
+                                    <li class="active"><a href="${proCid}">${TAG}<i class="ti-arrow-right"></i></a></li>
+                                        </c:if>
+
                                 <li class="active"><a href="blog-single.html">${tagDetail}</a></li>
                             </ul>
                         </div>
@@ -285,94 +293,144 @@
             <div class="modal-content" style="border:none;">
                 <div class="modal-body" style="padding: 60px;">
                     <div class="row no-gutters" style="margin-left: 200px ; margin-right: 200px;">
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                    <!-- Product Slider -->
-                    <div class="product-gallery">
-                        <div class="quickview-slider-active">
-                            <div class="single-slider">
-                                <img src="${prodetail.image}" alt="#">
-                            </div>
-                            <div class="single-slider">
-                                <img src="${prodetail.image}" alt="#">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Product slider -->
-                </div>
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                    <div class="quickview-content">
-                        <h2>${prodetail.title}</h2>
-                        <div class="quickview-ratting-review">
-                            <div class="quickview-ratting-wrap">
-                                <div class="quickview-ratting">
-                                    <i class="yellow fa fa-star"></i>
-                                    <i class="yellow fa fa-star"></i>
-                                    <i class="yellow fa fa-star"></i>
-                                    <i class="yellow fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <a href="#"> (1 customer review)</a>
-                            </div>
-                            <div class="quickview-stock">
-                                <span><i class="fa fa-check-circle-o"></i> in stock</span>
-                            </div>
-                        </div>
-                        <h3>$${prodetail.price}</h3>
-                        <div class="quickview-peragraph">
-                            <p>${prodetail.description}</p>
-                        </div>
-                        <div class="size">
-                            <div class="row">
-                                <div class="col-lg-6 col-12">
-                                    <h5 class="title">Size</h5>
-                                    <select id="size">
-                                        <option selected="selected">s</option>
-                                        <option>m</option>
-                                        <option>l</option>
-                                        
-                                    </select>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="quantity" style="margin-bottom: 20px;">
-                            <!-- Input Order -->
-                            <div class="input-group">
-                                <div class="button minus">
-                                    <button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-                                        <i class="ti-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" id="quantity" name="quant[1]" class="input-number"  data-min="1" data-max="1000" value="1">
-                                <div class="button plus">
-                                    <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
-                                        <i class="ti-plus"></i>
-                                    </button>
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            <!-- Product Slider -->
+                            <div class="product-gallery">
+                                <div class="quickview-slider-active">
+                                    <div class="single-slider">
+                                        <img src="${prodetail.image}" alt="#">
+                                    </div>
+                                    <div class="single-slider">
+                                        <img src="${prodetail.image}" alt="#">
+                                    </div>
                                 </div>
                             </div>
-                            <!--/ End Input Order -->
+                            <!-- End Product slider -->
                         </div>
-                        <div class="add-to-cart">
-                            <a onclick="addtocart()" class="btn">Add to cart</a>
-                            <a href="#" class="btn min"><i class="ti-heart"></i></a>
-                            <a href="#" class="btn min"><i class="fa fa-compress"></i></a>
-                        </div>
-                        <div class="default-social">
-                            <h4 class="share-now">Share:</h4>
-                            <ul>
-                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                <li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
-                            </ul>
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            <div class="quickview-content">
+                                <h2>${prodetail.title}</h2>
+                                <div class="quickview-ratting-review">
+                                    <div class="quickview-ratting-wrap">
+                                        <div class="quickview-ratting">
+                                            <i class="yellow fa fa-star"></i>
+                                            <i class="yellow fa fa-star"></i>
+                                            <i class="yellow fa fa-star"></i>
+                                            <i class="yellow fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <a href="#"> (1 customer review)</a>
+                                    </div>
+                                    <div class="quickview-stock">
+                                        <c:if test="${prodetail.amount > 0}">
+                                            <span><i class="fa fa-check-circle-o"></i> in stock</span>
+                                        </c:if>
+                                        <c:if test="${prodetail.amount == 0}">
+                                            <span><i class="fa fa-times"></i> out stock</span>
+                                        </c:if>
+
+                                    </div>
+                                </div>
+                                <h3>$${prodetail.price}</h3>
+                                <div class="quickview-peragraph">
+                                    <p>${prodetail.description}</p>
+                                </div>
+                                <div class="size">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-12">
+                                            <h5 class="title">Size</h5>
+                                            <select id="size">
+                                                <c:if test="${prodetail.size1 > 0}">
+                                                    <option >s</option>
+                                                </c:if>
+                                                <c:if test="${prodetail.size2 > 0}">
+                                                    <option >m</option>
+                                                </c:if>
+                                                <c:if test="${prodetail.size3 > 0}">
+                                                    <option >l</option>
+                                                </c:if>
+
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="quantity" style="margin-bottom: 20px;">
+                                    <!-- Input Order -->
+                                    <div class="input-group">
+                                        <div class="button minus">
+                                            <button type="button" class="btn btn-primary btn-number"  onclick="minusCart()" data-field="quant[1]">
+                                                <i class="ti-minus"></i>
+                                            </button>
+                                        </div>
+                                        <input type="text" id="quantity" name="quant[1]" class="input-number"  data-min="1" data-max="1000" value="1">
+                                        <div class="button plus">
+                                            <button type="button" id="plusC" class="btn btn-primary btn-number"  onclick="plusCart()" data-field="quant[1]">
+                                                <i class="ti-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!--/ End Input Order -->
+                                </div>
+                                <div class="add-to-cart">
+                                    <c:if test="${prodetail.amount > 0}">
+                                        <a onclick="addtocart()" class="btn">Add to cart</a>
+                                    </c:if>
+
+
+                                </div>
+                                <!--                        <div class="default-social">
+                                                            <h4 class="share-now">Share:</h4>
+                                                            <ul>
+                                                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                                                <li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                                                                <li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
+                                                            </ul>
+                                                        </div>-->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="review-container">
+            <h2>Reviews <span class="total-review" id="total-review">${totalreview} reviews</span></h2> 
+
+            <label for="input_review" class="input-field">
+
+                <input id="input_review" placeholder="Add a new review ..." type="text">
+            </label>
+            <button class="addreview" onclick="addreview(${prodetail.id})">Add</button>
+
+
+
+            <div class="cards">
+                <div class="card-review" id="card-review">
+                    <c:forEach items="${listReview}" var="o">
+                        <div class="review-block">
+                            <div class="card-top">
+                                <div class="name">
+                                    <p style="color: #F7941D">${o.username}</p>
+                                </div>
+                                <div class="name">
+                                    <p style="color: #F7941D">${o.createDate}</p>
+                                </div>
+                            </div>
+
+                            <div class="card-content">
+                                <p style="color: #000">${o.content}</p>
+                            </div>
+                        </div>
+                    </c:forEach>
+
+
+
+                </div>
+
             </div>
         </div>
-        
         <!-- Start Shop Newsletter  -->
         <!--		<section class="shop-newsletter section">
                                 <div class="container">
@@ -399,11 +457,68 @@
 
 
         <!-- Modal -->
-        
+
         <!-- Modal end -->
 
         <script>
-            function addtocart(){
+            function minusCart() {
+
+
+                var quantity = document.getElementById('quantity').value;
+
+                quantity = Number(quantity);
+                if (quantity > 1) {
+                    document.getElementById('quantity').value = quantity - 1;
+                }
+
+            }
+            function plusCart() {
+
+                var size1 = ${prodetail.size1};
+
+                var quantity = document.getElementById('quantity').value;
+                quantity = Number(quantity);
+
+                var size = document.getElementById('size').value;
+                if (size === 's') {
+                    if (quantity < size1) {
+                        document.getElementById('quantity').value = quantity + 1;
+                    }
+                }
+                if (size === 'm') {
+                    if (quantity < ${prodetail.size2}) {
+                        document.getElementById('quantity').value = quantity + 1;
+                    }
+                }
+                if (size === 'l') {
+                    if (quantity < ${prodetail.size3}) {
+                        document.getElementById('quantity').value = quantity + 1;
+                    }
+                }
+
+            }
+            function addreview(pid) {
+                var content = document.getElementById('input_review').value;
+                $.ajax({
+                    url: "/Webbangiay/review",
+                    type: "get", //send it through get method
+                    data: {
+                        pid: pid,
+                        content: content
+                    },
+                    success: function (data) {
+                        //Do Something
+                        document.getElementById('card-review').innerHTML = data;
+                        document.getElementById('input_review').value = "";
+                        var reviews = document.getElementsByClassName('review-block');
+                        document.getElementById('total-review').innerHTML = reviews.length + " reviews";
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+            }
+            function addtocart() {
                 var size = document.getElementById('size').value;
                 var quantity = document.getElementById('quantity').value;
                 var idP = ${prodetail.id};
@@ -425,25 +540,25 @@
                         var total = 0;
                         var qtts = document.getElementsByClassName('cart-quantity');
                         var prices = document.getElementsByClassName('cart-price');
-                        for(var i = 0;i<qtts.length;i++){
+                        for (var i = 0; i < qtts.length; i++) {
                             total += qtts[i].getAttribute('data-value') * prices[i].getAttribute('data-value');
                         }
-                        
-                        document.getElementById('total-amount').innerHTML = "$ "+total+".0";
+
+                        document.getElementById('total-amount').innerHTML = "$ " + total + ".0";
                     },
                     error: function (xhr) {
                         //Do Something to handle error
                     }
                 });
             }
-            function deletecartitem(pid , size){
+            function deletecartitem(pid, size) {
 
                 $.ajax({
                     url: "/Webbangiay/deletecartitem",
                     type: "get", //send it through get method
                     data: {
                         pid: pid,
-                        size : size,
+                        size: size,
                     },
                     success: function (data) {
                         //Do Something
@@ -455,11 +570,11 @@
                         var total = 0;
                         var qtts = document.getElementsByClassName('cart-quantity');
                         var prices = document.getElementsByClassName('cart-price');
-                        for(var i = 0;i<qtts.length;i++){
+                        for (var i = 0; i < qtts.length; i++) {
                             total += qtts[i].getAttribute('data-value') * prices[i].getAttribute('data-value');
                         }
-                        
-                        document.getElementById('total-amount').innerHTML = "$ "+total+".0";
+
+                        document.getElementById('total-amount').innerHTML = "$ " + total + ".0";
                     },
                     error: function (xhr) {
                         //Do Something to handle error

@@ -5,22 +5,24 @@
 package control;
 
 import dao.DAO;
-import entity.Product;
+import entity.Account;
 import entity.Review;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-public class ProductDetailControl extends HttpServlet {
+public class ReviewControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,31 +36,32 @@ public class ProductDetailControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
+        PrintWriter out = response.getWriter();
+        String pid = request.getParameter("pid");
+        String content = request.getParameter("content");
+        HttpSession session = request.getSession();
+        DAO dao = new DAO();
+        SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy");
+        String createDate = fm.format(new Date());
+        Account acc = (Account) session.getAttribute("acc");
+        dao.AddReview(acc.getId(), Integer.parseInt(pid), content, createDate);
+        List<Review> listReview = dao.getReviewProduct(Integer.parseInt(pid));
 
-            DAO dao = new DAO();
-            String pid = request.getParameter("pid");
-            Product p = dao.getProductById1(pid);
-            String tag = request.getParameter("tag");
-            List<Review> listReview = dao.getReviewProduct(Integer.parseInt(pid));
-            if (listReview == null || listReview.size() == 0) {
-                listReview = new ArrayList<>();
-            } else {
-                for (Review rv : listReview) {
-                    rv.setUsername(dao.getUser(rv.getIdUser()).getUser());
-                }
-            }
-            if (tag == null) {
-                tag = "All Products";
-            }
-            request.setAttribute("TAG", tag);
-            request.setAttribute("prodetail", p);
-            request.setAttribute("tagDetail", p.getTitle());
-            request.setAttribute("proCid", "category?cid=" + dao.getCidProduct(p.getId() + ""));
-            request.setAttribute("listReview", listReview);
-            request.setAttribute("totalreview", listReview.size());
-            request.getRequestDispatcher("shopdetail.jsp").forward(request, response);
-        } catch (Exception e) {
+        for (Review rv : listReview) {
+            out.println("<div class=\"review-block\">\n" +
+"                            <div class=\"card-top\">\n" +
+"                                <div class=\"name\">\n" +
+"                                    <p style=\"color: #F7941D\">"+dao.getUser(rv.getIdUser()).getUser()+"</p>\n" +
+"                                </div>\n" +
+"                                <div class=\"name\">\n" +
+"                                    <p style=\"color: #F7941D\">"+rv.getCreateDate()+"</p>\n" +
+"                                </div>\n" +
+"                            </div>\n" +
+"\n" +
+"                            <div class=\"card-content\">\n" +
+"                                <p style=\"color: #000\">"+rv.getContent()+"</p>\n" +
+"                            </div>\n" +
+"                        </div>");
         }
     }
 

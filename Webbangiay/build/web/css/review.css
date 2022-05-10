@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+.review-container {
+    width: 50%;
+    
+    margin-left: 255px;
+    margin-bottom: 50px;
+    border-top : 1px solid #000;
+    
+    padding: 2.5rem;
+}
+
+.review-container #input_review{
+    margin-top: 30px;
+    width: 400px;
+    height: 100px;
+    padding-bottom: 70px !important;
+}
+.review-container .card-review{
+    border: none !important;
+    color: #000;
+}
+.review-container .card-top{
+  
+   
+ 
+   display: flex;
+   justify-content: space-between;
+   margin-right: 20px;
+}
+.review-container .addreview{
+    width: 50px !important;
+}
+.review-container .total-review{
+    font-size: 12px;
+    padding-left: 20px;
+}

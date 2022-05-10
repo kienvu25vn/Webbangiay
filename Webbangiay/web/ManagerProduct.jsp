@@ -33,7 +33,9 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <h2><b>Manage Products</b></h2>
+                            <h2><b><a href="start" style="text-decoration: none; color : #fff">Back to shop</a></b></h2>
                         </div>
+                        
                         <div class="col-sm-6">
                             <!--<a href="start"><button type="button" class="btn btn-primary">Back to home</button>-->
                             <a href="#addProductModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
@@ -50,6 +52,10 @@
                             <th>Price</th>
                             <th>Image</th>
                             <th>Color</th>
+                            <th>Size S</th>
+                            <th>Size M</th>
+                            <th>Size L</th>
+                            <th>Amount</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -62,6 +68,10 @@
                                 <td>${o.price} $</td>
                                 <td><img src="${o.image}"></td>
                                 <td>${o.color}</td>
+                                <td>${o.size1}</td>
+                                <td>${o.size2}</td>
+                                <td>${o.size3}</td>
+                                <td>${o.amount}</td>
                                 <td>
                                     <a href="loadProduct?pid=${o.id}"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                     <a href="delete?pid=${o.id}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>

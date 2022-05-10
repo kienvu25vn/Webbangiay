@@ -8,8 +8,10 @@ import dao.DAO;
 import entity.Account;
 import entity.Bill;
 import entity.Cart;
+import entity.UserCarts;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -55,6 +57,32 @@ public class CheckOutConTrol extends HttpServlet {
             } else {
                 shiping = 10;
             }
+            total = total + shiping;
+            int idBill = dao.AddBill(acc.getId(), email, address, total);
+            for (Cart c : listCart) {
+                dao.AddDetailBill(c.getProduct().getId(), idBill, c.getQuantity(), (int) c.getProduct().getPrice(), c.getSize());
+                String size = "";
+                if (c.getSize().equalsIgnoreCase("S")) {
+                    size = "size1";
+                } else if (c.getSize().equalsIgnoreCase("M")) {
+                    size = "size2";
+                } else {
+                    size = "size3";
+                }
+                int Size = dao.getSizeProduct(size, c.getProduct().getId());
+                dao.updateSizeProduct(size, Size - c.getQuantity(), c.getProduct().getId());
+                int amount = dao.getAmountProduct(c.getProduct().getId());
+                dao.updateAmountProduct(amount - c.getQuantity(), c.getProduct().getId());
+            }
+            List<UserCarts> UserCarts = (List<UserCarts>) session.getAttribute("listUserCarts");
+            for (UserCarts uc : UserCarts) {
+                if (uc.getIdUser() == acc.getId()) {
+                    uc.setListCart(new ArrayList<>());
+                    session.setAttribute("listCart", uc.getListCart());
+                    break;
+                }
+            }
+            request.getRequestDispatcher("start").forward(request, response);
         } catch (Exception e) {
         }
     }

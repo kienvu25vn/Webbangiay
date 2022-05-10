@@ -21,7 +21,7 @@ public class ManagerControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             DAO dao = new DAO();
-            List<Product> list = dao.getAllProducts();
+            List<Product> list = dao.getAllProducts1();
             List<Category> listC = dao.getAllCategorys();
             request.setAttribute("listP", list);
             request.setAttribute("listCC", listC);
