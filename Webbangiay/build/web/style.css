@@ -4849,14 +4849,7 @@ Version:1.0
 	background:#F7941D;
 	border-color:transparent;
 }
-.review-container {
-    width: 40%;
-    background: rgb(33, 32, 50);
-    color: #fff;
-    margin: 2rem;
-    box-shadow: 1px 3px 2px rgba(0, 0, 0, .2);
-    padding: 2.5rem;
-}
+
 /*=============================
 	/End 404 Error CSS
 ===============================*/
