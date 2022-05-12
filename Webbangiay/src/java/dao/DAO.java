@@ -6,6 +6,7 @@ package dao;
 
 import context.DBContext;
 import entity.Account;
+import entity.Cart;
 import entity.Category;
 import entity.Product;
 import entity.Review;
@@ -454,16 +455,19 @@ public class DAO {
         }
     }
 
-    public int AddBill(int idUser, String email, String address, int total) {
-        String query = "insert into Bill (idUser , email , address , total) values (?,?,?,?)";
+    public int AddBill(int idUser, String customerName, String phone, String email, String address, int total, String payment) {
+        String query = "insert into Bill (idUser ,customerName, phone , email , address , total , payment) values (?,?,?,?,?,?,?)";
         try {
             String generatedColumns[] = {"idBill"};
             conn = new DBContext().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query, generatedColumns);
             ps.setInt(1, idUser);
-            ps.setString(2, email);
-            ps.setString(3, address);
-            ps.setInt(4, total);
+            ps.setString(2, customerName);
+            ps.setString(3, phone);
+            ps.setString(4, email);
+            ps.setString(5, address);
+            ps.setInt(6, total);
+            ps.setString(7, payment);
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -606,8 +610,92 @@ public class DAO {
         return listR;
     }
 
+    public List<Integer> getIdBillByIdUser(int idUser) {
+        String query = "select idBill from Bill where idUser = ?";
+        List<Integer> listIdBill = new ArrayList<>();
+        try {
+            conn = new DBContext().getConnection();//mo ket noi voi sql
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, idUser);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                listIdBill.add(rs.getInt(1));
+            }
+
+        } catch (Exception e) {
+        }
+        return listIdBill;
+    }
+
+    public List<Integer> getIdDetailBillByIdBill(int idBill) {
+        String query = "select idDetailBill from detailBill where idBill = ?";
+        List<Integer> listIdBill = new ArrayList<>();
+        try {
+            conn = new DBContext().getConnection();//mo ket noi voi sql
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, idBill);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                listIdBill.add(rs.getInt(1));
+            }
+
+        } catch (Exception e) {
+        }
+        return listIdBill;
+    }
+
+    public Cart getCartByIdDetailBill(int idDetailBill) {
+        Cart cart = new Cart();
+        String query = "select idP , quantity ,price , size from detailBill where idDetailBill = ?";
+
+        try {
+            conn = new DBContext().getConnection();//mo ket noi voi sql
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, idDetailBill);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Cart(new DAO().getProductById(rs.getInt(1) + ""), rs.getString(4), rs.getInt(2));
+            }
+
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public List<Product> getInventoryProducs() {
+        List<Product> list = new ArrayList<>();
+        String query = "select * from sanpham  order by 8 desc limit 5";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getInt(8)));
+            }
+
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<Product> getTopSellerProducs() {
+        List<Product> list = new ArrayList<>();
+        String query = "select * from sanpham  order by 8 asc limit 5";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getInt(8)));
+            }
+
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
-        dao.AddReview(1, 1, "abcd", "10/05/2022");
+
     }
 }

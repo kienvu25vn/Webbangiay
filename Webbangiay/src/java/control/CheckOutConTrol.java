@@ -40,11 +40,11 @@ public class CheckOutConTrol extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             request.setCharacterEncoding("UTF-8");
-            String firstName = request.getParameter("firstname");
-            String lastName = request.getParameter("lastName");
+            String customerName = request.getParameter("customerName");
             String email = request.getParameter("email");
             String phoneNumber = request.getParameter("phonenumber");
             String address = request.getParameter("address");
+            String payment = request.getParameter("payment");
             DAO dao = new DAO();
             List<Cart> listCart = (List<Cart>) session.getAttribute("listCart");
             Account acc = (Account) session.getAttribute("acc");
@@ -58,7 +58,7 @@ public class CheckOutConTrol extends HttpServlet {
                 shiping = 10;
             }
             total = total + shiping;
-            int idBill = dao.AddBill(acc.getId(), email, address, total);
+            int idBill = dao.AddBill(acc.getId(), customerName, payment, email, address, total, payment);
             for (Cart c : listCart) {
                 dao.AddDetailBill(c.getProduct().getId(), idBill, c.getQuantity(), (int) c.getProduct().getPrice(), c.getSize());
                 String size = "";
@@ -82,7 +82,7 @@ public class CheckOutConTrol extends HttpServlet {
                     break;
                 }
             }
-            request.getRequestDispatcher("start").forward(request, response);
+            request.getRequestDispatcher("thankpage.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }

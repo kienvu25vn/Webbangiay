@@ -13,12 +13,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Title Tag  -->
-        <title>Eshop - eCommerce HTML5 Template.</title>
+        <title>Group 18</title>
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="images/favicon.png">
         <!-- Web Font -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script><!-- comment -->
+        <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script><!-- comment -->
         <!-- StyleSheet -->
 
         <!-- Bootstrap -->
@@ -51,7 +54,40 @@
 
     </head>
     <body class="js">
+        <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0" nonce="YP62POiV"></script>
+        <!-- Messenger Chat Plugin Code -->
+        <div id="fb-root"></div>
 
+        <!-- Your Chat Plugin code -->
+        <div id="fb-customer-chat" class="fb-customerchat">
+        </div>
+
+        <script>
+            var chatbox = document.getElementById('fb-customer-chat');
+            chatbox.setAttribute("page_id", "100328352690457");
+            chatbox.setAttribute("attribution", "biz_inbox");
+        </script>
+
+        <!-- Your SDK code -->
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    xfbml: true,
+                    version: 'v13.0'
+                });
+            };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
         <!-- Preloader -->
         <!--	<div class="preloader">
                         <div class="preloader-inner">
@@ -65,7 +101,7 @@
 
 
         <!-- Header -->
-       <%@include file="header.jsp" %>
+        <%@include file="header.jsp" %>
         <!--/ End Header -->
 
         <!-- Slider Area -->
@@ -102,7 +138,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="section-title">
-                            <h2>Trending Item</h2>
+                            <h2>New Arrivals</h2>
                         </div>
                     </div>
                 </div>
@@ -139,8 +175,7 @@
                                                             <div class="button-head">
                                                                 <div class="product-action">
                                                                     <a data-toggle="modal" data-target="#exampleModal" title="Quick View" onlick="quickShop(${o.id})"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                                                    <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                                                    <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+                                                                    
                                                                 </div>
                                                                 <div class="product-action-2">
                                                                     <a title="Add to cart" onclick="addtocartquick(${o.id})">Add to cart</a>
@@ -202,7 +237,7 @@
                                             type: "get", //send it through get method
                                             data: {
                                                 pid: pid,
-                                                
+
 //                        quantity: quantity
                                             },
                                             success: function (data) {
@@ -1451,19 +1486,19 @@
             <div class="container">
                 <div class="row">
                     <!-- Single Banner  -->
-                    <div class="col-lg-6 col-md-6 col-12">
+                    <div class="col-lg-12 col-md-12 col-12">
                         <div class="single-banner">
-                            <img src="https://via.placeholder.com/600x370" alt="#">
+                            <img src="images/collection1.jpg" alt="#">
                             <div class="content">
-                                <p>Man's Collectons</p>
-                                <h3>Man's items <br>Up to<span> 50%</span></h3>
+                                <p style="font-size: 30px;">Sale off</p>
+                                <h3> <br>Up to<span> 50%</span></h3>
                                 <a href="#">Shop Now</a>
                             </div>
                         </div>
                     </div>
                     <!-- /End Single Banner  -->
                     <!-- Single Banner  -->
-                    <div class="col-lg-6 col-md-6 col-12">
+<!--                    <div class="col-lg-6 col-md-6 col-12">
                         <div class="single-banner">
                             <img src="https://via.placeholder.com/600x370" alt="#">
                             <div class="content">
@@ -1472,7 +1507,7 @@
                                 <a href="#" class="btn">Shop Now</a>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <!-- /End Single Banner  -->
                 </div>
             </div>
@@ -1834,7 +1869,7 @@
         <!-- /End Cowndown Area -->
 
         <!-- Start Shop Blog  -->
-        <section class="shop-blog section">
+<!--        <section class="shop-blog section">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -1845,7 +1880,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-12">
-                        <!-- Start Single Blog  -->
+                         Start Single Blog  
                         <div class="shop-single-blog">
                             <img src="https://via.placeholder.com/370x300" alt="#">
                             <div class="content">
@@ -1854,10 +1889,10 @@
                                 <a href="#" class="more-btn">Continue Reading</a>
                             </div>
                         </div>
-                        <!-- End Single Blog  -->
+                         End Single Blog  
                     </div>
                     <div class="col-lg-4 col-md-6 col-12">
-                        <!-- Start Single Blog  -->
+                         Start Single Blog  
                         <div class="shop-single-blog">
                             <img src="https://via.placeholder.com/370x300" alt="#">
                             <div class="content">
@@ -1866,10 +1901,10 @@
                                 <a href="#" class="more-btn">Continue Reading</a>
                             </div>
                         </div>
-                        <!-- End Single Blog  -->
+                         End Single Blog  
                     </div>
                     <div class="col-lg-4 col-md-6 col-12">
-                        <!-- Start Single Blog  -->
+                         Start Single Blog  
                         <div class="shop-single-blog">
                             <img src="https://via.placeholder.com/370x300" alt="#">
                             <div class="content">
@@ -1878,11 +1913,11 @@
                                 <a href="#" class="more-btn">Continue Reading</a>
                             </div>
                         </div>
-                        <!-- End Single Blog  -->
+                         End Single Blog  
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
         <!-- End Shop Blog  -->
 
         <!-- Start Shop Services Area -->
@@ -1894,7 +1929,7 @@
                         <div class="single-service">
                             <i class="ti-rocket"></i>
                             <h4>Free shiping</h4>
-                            <p>Orders over $100</p>
+                            <p>Orders over $500</p>
                         </div>
                         <!-- End Single Service -->
                     </div>
@@ -1931,26 +1966,7 @@
         <!-- End Shop Services Area -->
 
         <!-- Start Shop Newsletter  -->
-        <section class="shop-newsletter section">
-            <div class="container">
-                <div class="inner-top">
-                    <div class="row">
-                        <div class="col-lg-8 offset-lg-2 col-12">
-                            <!-- Start Newsletter Inner -->
-                            <div class="inner">
-                                <h4>Newsletter</h4>
-                                <p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-                                <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-                                    <input name="EMAIL" placeholder="Your email address" required="" type="email">
-                                    <button class="btn">Subscribe</button>
-                                </form>
-                            </div>
-                            <!-- End Newsletter Inner -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+       
         <!-- End Shop Newsletter -->
 
         <!-- Modal -->
@@ -2085,96 +2101,7 @@
             }
         </script>
         <!-- Start Footer Area -->
-        <footer class="footer">
-            <!-- Footer Top -->
-            <div class="footer-top section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer about">
-                                <div class="logo">
-                                    <a href="index.html"><img src="images/logo2.png" alt="#"></a>
-                                </div>
-                                <p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-                                <p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer links">
-                                <h4>Information</h4>
-                                <ul>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Faq</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                    <li><a href="#">Help</a></li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer links">
-                                <h4>Customer Service</h4>
-                                <ul>
-                                    <li><a href="#">Payment Methods</a></li>
-                                    <li><a href="#">Money-back</a></li>
-                                    <li><a href="#">Returns</a></li>
-                                    <li><a href="#">Shipping</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer social">
-                                <h4>Get In Tuch</h4>
-                                <!-- Single Widget -->
-                                <div class="contact">
-                                    <ul>
-                                        <li>NO. 342 - London Oxford Street.</li>
-                                        <li>012 United Kingdom.</li>
-                                        <li>info@eshop.com</li>
-                                        <li>+032 3456 7890</li>
-                                    </ul>
-                                </div>
-                                <!-- End Single Widget -->
-                                <ul>
-                                    <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                    <li><a href="#"><i class="ti-twitter"></i></a></li>
-                                    <li><a href="#"><i class="ti-flickr"></i></a></li>
-                                    <li><a href="#"><i class="ti-instagram"></i></a></li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Footer Top -->
-            <div class="copyright">
-                <div class="container">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-lg-6 col-12">
-                                <div class="left">
-                                    <p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-12">
-                                <div class="right">
-                                    <img src="images/payments.png" alt="#">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <%@include file="footer.jsp" %>
         <!-- /End Footer Area -->
 
         <!-- Jquery -->

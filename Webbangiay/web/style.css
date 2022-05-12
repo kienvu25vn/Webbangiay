@@ -3392,11 +3392,11 @@ Version:1.0
 	text-align: center;
 	margin-top: 30px;
 }
-.shop.checkout .single-widget.get-button {
+.shop.checkout .container .single-widget.get-button {
 	text-align: center;
 	padding:0px 35px;
 }
-.shop.checkout .single-widget.get-button .btn {
+.shop.checkout .container .single-widget.get-button .btn {
 	height: 46px;
 	width: 100%;
 	line-height: 19px;

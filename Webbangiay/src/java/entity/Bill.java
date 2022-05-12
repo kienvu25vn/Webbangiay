@@ -10,8 +10,8 @@ package entity;
  */
 public class Bill {
     private int idBill , idUser , total ;
-    private String email , adrress ;
-
+    private String email , adrress , customerName , phone ,payment;
+    
     public Bill() {
     }
 

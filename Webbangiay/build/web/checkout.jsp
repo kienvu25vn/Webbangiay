@@ -21,12 +21,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Title Tag  -->
-        <title>Eshop - eCommerce HTML5 Template.</title>
+        <title>Group 18</title>
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="images/favicon.png">
         <!-- Web Font -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
         <!-- StyleSheet -->
 
         <!-- Bootstrap -->
@@ -82,7 +85,7 @@
                             <div class="top-left">
                                 <ul class="list-main">
                                     <!-- <li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li> -->
-                                    <li><i class="ti-email"></i> support@shophub.com</li>
+                                    <li><i class="ti-email"></i> group18@webshop.com</li>
                                 </ul>
                             </div>
                             <!--/ End Top Left -->
@@ -151,11 +154,9 @@
                         <div class="col-lg-2 col-md-3 col-12">
                             <div class="right-bar">
                                 <!-- Search Form -->
+                                
                                 <div class="sinlge-bar">
-                                    <a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                                </div>
-                                <div class="sinlge-bar">
-                                    <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                                    <a href="history" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                                 </div>
                                 <div class="sinlge-bar shopping">
                                     <a href="cart.jsp" class="single-icon"><i class="ti-bag"></i> <span id="total-count" class="total-count"><%
@@ -278,7 +279,7 @@
                     <div class="col-12">
                         <div class="bread-inner">
                             <ul class="bread-list">
-                                <li><a href="home.jsp">Home<i class="ti-arrow-right"></i></a></li>
+                                <li><a href="shopmain">Shop<i class="ti-arrow-right"></i></a></li>
                                 <li class="active"><a href="checkout.jsp">Checkout</a></li>
                             </ul>
                         </div>
@@ -301,26 +302,21 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>First Name<span>*</span></label>
-                                            <input type="text" name="firstname" placeholder="" required="required">
+                                            <label>Customer Name<span>*</span></label>
+                                            <input type="text" name="customerName" placeholder="" required="required">
                                         </div>
                                     </div>
+
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Last Name<span>*</span></label>
-                                            <input type="text" name="lastname" placeholder="" required="required">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label>Email Address<span>*</span></label>
+                                            <label>Email<span>*</span></label>
                                             <input type="email" name="email" placeholder="" required="required">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Phone Number<span>*</span></label>
-                                            <input type="number" name="phonenumber" placeholder="" required="required">
+                                            <input type="text" name="phone" placeholder="" required="required">
                                         </div>
                                     </div>
 
@@ -331,6 +327,19 @@
                                             <input type="text" name="address" placeholder="" required="required">
                                         </div>
                                     </div>
+                                    <div class="single-widget">
+                                        <h2>Payments</h2>
+                                        <div class="content">
+
+                                            <div class="payment-radio">    
+                                                <label for="2"><input name="payment" id="2" type="radio" value="cash"> Cash </label>
+                                                <label for="3"><input name="payment" id="3" type="radio" value="paypal"> PayPal</label>
+                                                <label for="4"><input name="payment" id="4" type="radio" value="visa"> Visa</label>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
                                     <!--									<div class="col-lg-6 col-md-6 col-12">
                                                                                                                     <div class="form-group">
                                                                                                                             <label>Address Line 2<span>*</span></label>
@@ -340,13 +349,19 @@
 
 
                                 </div>
-                                <div class="single-widget get-button">
-                                <div class="content">
-                                    <div class="button">
-                                        <input type="submit" value="CheckOut">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                <div >
+                                    <div >
+                                        <div onMouseOver="this.style.background='#F7941D'"
+   onMouseOut="this.style.background='#000'"  style="background: #000;border-radius:  5px;margin-left: -15px;margin-top: 20px">
+                                            <input type="submit" value="CheckOut" style="    width: 100%;
+    height: 50px;
+    background: transparent;
+    color: #fff;" >
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                </div>
                             </form>
                             <!--/ End Form -->
                         </div>
@@ -360,7 +375,7 @@
                                     <ul>
                                         <li>Customer<span>${sessionScope.acc.user}</span></li>
                                             <c:forEach items="${listCart}" var="p" >
-                                            <li>${p.product.title} x${p.quantity}<span>Size ${p.size}</span></li>
+                                            <li>${p.product.title} &nbsp; x${p.quantity}<span>Size ${p.size}</span></li>
                                             </c:forEach>
 
 
@@ -393,9 +408,9 @@
                                             }
                                                 %></span></li>
                                         <li>Date<span>
-                                            <%
-                                                SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy");
-                                                out.print(fm.format(new Date()));
+                                                <%
+                                                    SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy");
+                                                    out.print(fm.format(new Date()));
                                                 %>
                                             </span>
                                         </li>
@@ -404,32 +419,32 @@
                             </div>
                             <!--/ End Order Widget -->
                             <!-- Order Widget -->
-                            <div class="single-widget">
-                                <h2>Payments</h2>
-                                <div class="content">
-                                    
-                                    <div class="payment-radio">    
-                                        <label for="2"><input name="payment" id="2" type="radio"> Cash </label>
-                                        <label for="3"><input name="payment" id="3" type="radio"> PayPal</label>
-                                    </div>
-                                </div>
-                            </div>
+                            <!--                            <div class="single-widget">
+                                                            <h2>Payments</h2>
+                                                            <div class="content">
+                                                                
+                                                                <div class="payment-radio">    
+                                                                    <label for="2"><input name="payment" id="2" type="radio"> Cash </label>
+                                                                    <label for="3"><input name="payment" id="3" type="radio"> PayPal</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
                             <!--/ End Order Widget -->
                             <!-- Payment Method Widget -->
-                            <div class="single-widget payement">
-                                <div class="content">
-                                    <img src="images/payment-method.png" alt="#">
-                                </div>
-                            </div>
+                                                        <div class="single-widget payement">
+                                                            <div class="content">
+                                                                <img src="images/payment-method.png" alt="#">
+                                                            </div>
+                                                        </div>
                             <!--/ End Payment Method Widget -->
                             <!-- Button Widget -->
-                            <div class="single-widget get-button">
+<!--                            <div class="single-widget get-button">
                                 <div class="content">
                                     <div class="button">
                                         <a href="checkout" class="btn">proceed to checkout</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <!--/ End Button Widget -->
                         </div>
                     </div>
@@ -447,7 +462,7 @@
                         <div class="single-service">
                             <i class="ti-rocket"></i>
                             <h4>Free shiping</h4>
-                            <p>Orders over $100</p>
+                            <p>Orders over $500</p>
                         </div>
                         <!-- End Single Service -->
                     </div>
@@ -484,12 +499,12 @@
         <!-- End Shop Services -->
 
         <!-- Start Shop Newsletter  -->
-        <section class="shop-newsletter section">
+<!--        <section class="shop-newsletter section">
             <div class="container">
                 <div class="inner-top">
                     <div class="row">
                         <div class="col-lg-8 offset-lg-2 col-12">
-                            <!-- Start Newsletter Inner -->
+                             Start Newsletter Inner 
                             <div class="inner">
                                 <h4>Newsletter</h4>
                                 <p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
@@ -498,105 +513,16 @@
                                     <button class="btn">Subscribe</button>
                                 </form>
                             </div>
-                            <!-- End Newsletter Inner -->
+                             End Newsletter Inner 
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
         <!-- End Shop Newsletter -->
 
         <!-- Start Footer Area -->
-        <footer class="footer">
-            <!-- Footer Top -->
-            <div class="footer-top section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer about">
-                                <div class="logo">
-                                    <a href="index.html"><img src="images/logo2.png" alt="#"></a>
-                                </div>
-                                <p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-                                <p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer links">
-                                <h4>Information</h4>
-                                <ul>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Faq</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                    <li><a href="#">Help</a></li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer links">
-                                <h4>Customer Service</h4>
-                                <ul>
-                                    <li><a href="#">Payment Methods</a></li>
-                                    <li><a href="#">Money-back</a></li>
-                                    <li><a href="#">Returns</a></li>
-                                    <li><a href="#">Shipping</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer social">
-                                <h4>Get In Tuch</h4>
-                                <!-- Single Widget -->
-                                <div class="contact">
-                                    <ul>
-                                        <li>NO. 342 - London Oxford Street.</li>
-                                        <li>012 United Kingdom.</li>
-                                        <li>info@eshop.com</li>
-                                        <li>+032 3456 7890</li>
-                                    </ul>
-                                </div>
-                                <!-- End Single Widget -->
-                                <ul>
-                                    <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                    <li><a href="#"><i class="ti-twitter"></i></a></li>
-                                    <li><a href="#"><i class="ti-flickr"></i></a></li>
-                                    <li><a href="#"><i class="ti-instagram"></i></a></li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Footer Top -->
-            <div class="copyright">
-                <div class="container">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-lg-6 col-12">
-                                <div class="left">
-                                    <p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-12">
-                                <div class="right">
-                                    <img src="images/payments.png" alt="#">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+     <%@include file="footer.jsp" %>
         <!-- /End Footer Area -->
 
         <!-- Jquery -->

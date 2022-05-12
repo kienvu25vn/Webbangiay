@@ -12,7 +12,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+        <title>Group 18</title>
+         <link rel="icon" type="image/png" href="images/favicon.png">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -32,15 +33,15 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-3">
-                            <h2><b>Manage Products</b></h2>
+                            <h2 style="cursor: pointer"><b>Manage Products</b></h2>
                             
                             
                         </div>
-                        <div class="col-sm-3">
-                            <h2><b><a onclick="inventory()" >Inventory</a></b></h2>
+                        <div class="col-sm-3" >
+                            <h2><b><a class="fillter" onclick="inventory()" style="text-decoration: none;cursor: pointer;color: #fff">Inventory</a></b></h2>
                         </div>
                         <div class="col-sm-3">
-                            <h2><b><a onclick="topseller()">Top seller</a></b></h2>
+                            <h2><b><a class="fillter" onclick="topseller()" style="text-decoration: none;cursor: pointer;color: #fff">Top seller</a></b></h2>
                         </div>
                         <div class="col-sm-3 action_manage">
                             
@@ -176,7 +177,50 @@
     <script src="js/manager.js" type="text/javascript"></script>
     <script>
         function inventory(){
-            
+            var arr = document.getElementsByClassName('fillter');
+            for(var i = 0;i<arr.length ; i++){
+                if(arr[i].innerHTML === "Inventory"){
+                    arr[i].style.color = "#FFC107";
+                }
+                else{
+                     arr[i].style.color = "#fff";
+                }
+            }
+            $.ajax({
+                    url: "/Webbangiay/inventory",
+                    type: "get", //send it through get method
+                    success: function (data) {
+                        //Do Something
+                        document.getElementById('product').innerHTML = data;
+                        
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+        }
+        function topseller(){
+            var arr = document.getElementsByClassName('fillter');
+            for(var i = 0;i<arr.length ; i++){
+                if(arr[i].innerHTML === "Top seller"){
+                    arr[i].style.color = "#FFC107";
+                }
+                else{
+                     arr[i].style.color = "#fff";
+                }
+            }
+            $.ajax({
+                    url: "/Webbangiay/topseller",
+                    type: "get", //send it through get method
+                    success: function (data) {
+                        //Do Something
+                        document.getElementById('product').innerHTML = data;
+                        
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
         }
     </script>
 </body>

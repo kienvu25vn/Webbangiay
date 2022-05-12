@@ -4,6 +4,11 @@ body {
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;
 }
+.table-history{
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
 .table-wrapper {
     background: #fff;
     padding: 20px 25px;

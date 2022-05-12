@@ -56,6 +56,18 @@
         <servlet-name>ReviewControl</servlet-name>
         <servlet-class>control.ReviewControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HistoryControl</servlet-name>
+        <servlet-class>control.HistoryControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InventoryControl</servlet-name>
+        <servlet-class>control.InventoryControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TopSellerControl</servlet-name>
+        <servlet-class>control.TopSellerControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControl</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -116,6 +128,18 @@
     <servlet-mapping>
         <servlet-name>ReviewControl</servlet-name>
         <url-pattern>/review</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoryControl</servlet-name>
+        <url-pattern>/history</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InventoryControl</servlet-name>
+        <url-pattern>/inventory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TopSellerControl</servlet-name>
+        <url-pattern>/topseller</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
