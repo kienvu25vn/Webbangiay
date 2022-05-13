@@ -3,10 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/src/java/control/CheckOutConTrol.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/web/thankpage.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/web/Edit.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/web/shop.jsp</file>
             <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/src/java/dao/DAO.java</file>
             <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/src/java/entity/Bill.java</file>
             <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/src/java/entity/DetailBill.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/web/Login.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/src/java/control/TopSellerControl.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/web/css/manager.css</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/web/home.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/web/cart.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/src/java/context/DBContext.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/src/java/control/CheckOutConTrol.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/web/shopdetail.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/src/java/control/InventoryControl.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/web/header.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/web/ManagerProduct.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/Webbangiay/Webbangiay/web/checkout.jsp</file>
         </group>
     </open-files>
 </project-private>
