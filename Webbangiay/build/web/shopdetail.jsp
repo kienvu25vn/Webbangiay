@@ -18,9 +18,9 @@
         <!-- Web Font -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
         <script
-  src="https://code.jquery.com/jquery-3.6.0.js"
-  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous"></script>
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
         <!-- StyleSheet -->
 
         <!-- Bootstrap -->
@@ -147,7 +147,7 @@
                         <div class="col-lg-2 col-md-3 col-12">
                             <div class="right-bar">
                                 <!-- Search Form -->
-                                
+
                                 <div class="sinlge-bar">
                                     <a href="history" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                                 </div>
@@ -239,11 +239,7 @@
 
                                                     </li>
 
-                                                    <li><a href="#">Blog<i class="ti-angle-down"></i></a>
-                                                        <ul class="dropdown">
-                                                            <li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
-                                                        </ul>
-                                                    </li>
+
                                                     <li><a href="contact.html">Contact Us</a></li>
                                                         <c:if test="${sessionScope.acc.isAdmin == 1}">
                                                         <li><a href="manager">Manage Products</a></li>
@@ -323,7 +319,7 @@
                                         <c:if test="${totalreview >= 1}">
                                             <a href="#" id="total-review-head"> (${totalreview} customer review)</a>
                                         </c:if>
-                                        
+
                                     </div>
                                     <div class="quickview-stock">
                                         <c:if test="${prodetail.amount > 0}">
@@ -401,15 +397,15 @@
         </div>
         <div class="review-container">
             <h2>Reviews <span class="total-review" id="total-review">${totalreview} reviews</span></h2> 
- <c:if test="${acc != null}">
-            <label for="input_review" class="input-field">
+            <c:if test="${acc != null}">
+                <label for="input_review" class="input-field">
 
-                <input id="input_review" placeholder="Add a new review ..." type="text">
-            </label>
-           
-                 <button class="addreview" onclick="addreview(${prodetail.id})">Add</button>
+                    <input id="input_review" placeholder="Add a new review ..." type="text">
+                </label>
+
+                <button class="addreview" onclick="addreview(${prodetail.id})">Add</button>
             </c:if>
-           
+
 
 
 
@@ -436,6 +432,54 @@
 
                 </div>
 
+            </div>
+        </div>
+        <div class="product-area most-popular section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title">
+                            <h2>Similar Products</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="owl-carousel popular-slider">
+                            <!--                             Start Single Product -->
+                            <c:forEach items="${listSimilarProducts}" var="p">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <a href="productdetail?pid=${p.id}&tag=products">
+                                            <img class="default-img" src="${p.image}" alt="#">
+                                            <img class="hover-img" src="${p.image}" alt="#">
+<!--                                            <span class="out-of-stock">Hot</span>-->
+                                        </a>
+                                        <div class="button-head">
+                                            <div class="product-action">
+                                                <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                                                <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
+                                                <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+                                            </div>
+                                            <div class="product-action-2">
+                                                <a title="Add to cart" href="#">Add to cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-content">
+                                        <h3><a href="product-details.html">${p.title}</a></h3>
+                                        <div class="product-price">
+<!--                                            <span class="old">$${p.price}</span>-->
+                                            <span>$${p.price}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                            <!--                             End Single Product -->
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Start Shop Newsletter  -->
@@ -521,8 +565,7 @@
                         document.getElementById('total-review').innerHTML = reviews.length + " reviews";
                         if (reviews.length > 1) {
                             document.getElementById('total-review-head').innerHTML = reviews.length + " customer reviews";
-                        }
-                        else if(reviews.length === 1){
+                        } else if (reviews.length === 1) {
                             document.getElementById('total-review-head').innerHTML = reviews.length + " customer review";
                         }
                     },
@@ -693,7 +736,7 @@
             }
         </script>
         <!-- Start Footer Area -->
-     <%@include file="footer.jsp" %>
+        <%@include file="footer.jsp" %>
         <!-- /End Footer Area -->
 
 

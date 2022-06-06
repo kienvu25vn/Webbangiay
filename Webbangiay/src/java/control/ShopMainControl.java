@@ -48,7 +48,20 @@ public class ShopMainControl extends HttpServlet {
             }
             int flag = 0;
             HttpSession session = request.getSession();
+            List<Product> recentView = (List<Product>) session.getAttribute("recentView");
+            if (recentView == null) {
+                recentView = new ArrayList<>();
+
+            } else {
+                if (recentView.size() > 3) {
+                    for (int i = 0; i < recentView.size() - 3; i++) {
+                        recentView.remove(recentView.get(i));
+                    }
+                }
+            }
+            session.setAttribute("recentView", recentView);
             List<UserCarts> UserCarts = (List<UserCarts>) session.getAttribute("listUserCarts");
+
             Account acc = (Account) session.getAttribute("acc");
             if (UserCarts == null) {
                 UserCarts = new ArrayList<>();
@@ -70,6 +83,7 @@ public class ShopMainControl extends HttpServlet {
             request.setAttribute("tag", "All Products");
             request.setAttribute("pagetags", pagetags);
             request.setAttribute("pagetag", 1);
+
             request.getRequestDispatcher("shop.jsp").forward(request, response);
         } catch (Exception e) {
         }

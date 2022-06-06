@@ -1594,6 +1594,7 @@ Version:1.0
 }
 .midium-banner .single-banner{
 	position:relative;
+        margin-top: 100px;
 }
 .midium-banner .single-banner img{
 	height:100%;

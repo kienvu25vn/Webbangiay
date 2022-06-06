@@ -18,9 +18,9 @@
         <!-- Web Font -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
         <script
-  src="https://code.jquery.com/jquery-3.6.0.js"
-  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous"></script>
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
         <!-- StyleSheet -->
 
         <!-- Bootstrap -->
@@ -92,10 +92,10 @@
                                     <c:if test="${sessionScope.acc != null}">
                                         <li><i class="ti-user"></i>Hello ${sessionScope.acc.user}</li>
                                         <li><i class="ti-power-off"></i><a href="logout">Logout</a></li>
-                                    </c:if>
-                                    <c:if test="${sessionScope.acc == null}">
+                                            </c:if>
+                                            <c:if test="${sessionScope.acc == null}">
                                         <li><i class="ti-power-off"></i><a href="Login.jsp">Login</a></li>
-                                    </c:if>
+                                            </c:if>
                                 </ul>
                             </div>
                             <!-- End Top Right -->
@@ -147,7 +147,7 @@
                         <div class="col-lg-2 col-md-3 col-12">
                             <div class="right-bar">
                                 <!-- Search Form -->
-                                
+
                                 <div class="sinlge-bar">
                                     <a href="history" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                                 </div>
@@ -173,8 +173,8 @@
                                         <ul class="shopping-list" id="shopping-cart">
                                             <c:forEach items="${listCart}" var="p">
                                                 <li class="car-item">
-                                    
-                                                    <a onclick="deletecartitem(${p.product.id} )" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+
+                                                    <a onclick="deletecartitem(${p.product.id})" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
                                                     <a class="cart-img" href="productdetail?pid=${p.product.id}"><img src="${p.product.image}" alt="#"></a>
                                                     <h4><a href="productdetail?pid=${p.product.id}">${p.product.title}</a></h4>
                                                     <p class="quantity cart-quantity" id="cart-quantity" value="${p.quantity}">${p.quantity}x - <span class="amount cart-price" id="cart-price" value="${p.product.price}">$${p.product.price}</span> - <span class="size">Size ${p.size}</span></p>
@@ -241,13 +241,9 @@
 
                                                     </li>
 
-                                                    <li><a href="#">Blog<i class="ti-angle-down"></i></a>
-                                                        <ul class="dropdown">
-                                                            <li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
-                                                        </ul>
-                                                    </li>
+
                                                     <li><a href="contact.html">Contact Us</a></li>
-                                                     <c:if test="${sessionScope.acc.isAdmin == 1}">
+                                                        <c:if test="${sessionScope.acc.isAdmin == 1}">
                                                         <li><a href="manager">Manage Products</a></li>
                                                         </c:if>
                                                 </ul>
@@ -360,61 +356,63 @@
                             <!--/ End Shop By Price -->
                             <!-- Single Widget -->
                             <div class="single-widget recent-post">
-                                <h3 class="title">Recent post</h3>
-                                <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
+                                <h3 class="title">Recent View</h3>
+                                <!--                                 Single Post -->
+                                <c:forEach items="${recentView}" var="p">
+                                    <div class="single-post first">
+                                        <div class="image">
+                                            <img src="${p.image}" alt="#">
+                                        </div>
+                                        <div class="content">
+                                            <h5><a href="#">${p.title}</a></h5>
+                                            <p class="price">$${p.price}</p>
+                                            <ul class="reviews">
+                                                <li class="yellow"><i class="ti-star"></i></li>
+                                                <li class="yellow"><i class="ti-star"></i></li>
+                                                <li class="yellow"><i class="ti-star"></i></li>
+                                                <li><i class="ti-star"></i></li>
+                                                <li><i class="ti-star"></i></li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div class="content">
-                                        <h5><a href="#">Girls Dress</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Single Post -->
-                                <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
-                                    </div>
-                                    <div class="content">
-                                        <h5><a href="#">Women Clothings</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Single Post -->
-                                <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
-                                    </div>
-                                    <div class="content">
-                                        <h5><a href="#">Man Tshirt</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Single Post -->
+                                </c:forEach>
+                                <!--                                 End Single Post 
+                                                                 Single Post -->
+                                <!--                                <div class="single-post first">
+                                                                    <div class="image">
+                                                                        <img src="https://via.placeholder.com/75x75" alt="#">
+                                                                    </div>
+                                                                    <div class="content">
+                                                                        <h5><a href="#">Women Clothings</a></h5>
+                                                                        <p class="price">$99.50</p>
+                                                                        <ul class="reviews">
+                                                                            <li class="yellow"><i class="ti-star"></i></li>
+                                                                            <li class="yellow"><i class="ti-star"></i></li>
+                                                                            <li class="yellow"><i class="ti-star"></i></li>
+                                                                            <li class="yellow"><i class="ti-star"></i></li>
+                                                                            <li><i class="ti-star"></i></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>-->
+                                <!--                                 End Single Post 
+                                                                 Single Post -->
+                                <!--                                <div class="single-post first">
+                                                                    <div class="image">
+                                                                        <img src="https://via.placeholder.com/75x75" alt="#">
+                                                                    </div>
+                                                                    <div class="content">
+                                                                        <h5><a href="#">Man Tshirt</a></h5>
+                                                                        <p class="price">$99.50</p>
+                                                                        <ul class="reviews">
+                                                                            <li class="yellow"><i class="ti-star"></i></li>
+                                                                            <li class="yellow"><i class="ti-star"></i></li>
+                                                                            <li class="yellow"><i class="ti-star"></i></li>
+                                                                            <li class="yellow"><i class="ti-star"></i></li>
+                                                                            <li class="yellow"><i class="ti-star"></i></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>-->
+                                <!--                                 End Single Post -->
                             </div>
                             <!--/ End Single Widget -->
                             <!-- Single Widget -->
@@ -661,29 +659,29 @@
                         var total = 0;
                         var qtts = document.getElementsByClassName('cart-quantity');
                         var prices = document.getElementsByClassName('cart-price');
-                        for(var i = 0;i<qtts.length;i++){
+                        for (var i = 0; i < qtts.length; i++) {
                             total += qtts[i].getAttribute('data-value') * prices[i].getAttribute('data-value');
                         }
-                        
-                        document.getElementById('total-amount').innerHTML = "$ "+total+".0";
+
+                        document.getElementById('total-amount').innerHTML = "$ " + total + ".0";
                     },
                     error: function (xhr) {
                         //Do Something to handle error
                     }
                 });
             }
-            function deletecartitem(pid ){
-                
+            function deletecartitem(pid) {
+
 //                var pid = ${p.product.id};
 //                var size = ${p.size};
 //                var quantity = ${p.product.quantity};
-                
+
                 $.ajax({
                     url: "/Webbangiay/deletecartitem",
                     type: "get", //send it through get method
                     data: {
                         pid: pid,
-                       
+
 //                        quantity: quantity
                     },
                     success: function (data) {
@@ -696,11 +694,11 @@
                         var total = 0;
                         var qtts = document.getElementsByClassName('cart-quantity');
                         var prices = document.getElementsByClassName('cart-price');
-                        for(var i = 0;i<qtts.length;i++){
+                        for (var i = 0; i < qtts.length; i++) {
                             total += qtts[i].getAttribute('data-value') * prices[i].getAttribute('data-value');
                         }
-                        
-                        document.getElementById('total-amount').innerHTML = "$ "+total+".0";
+
+                        document.getElementById('total-amount').innerHTML = "$ " + total + ".0";
                     },
                     error: function (xhr) {
                         //Do Something to handle error
@@ -863,7 +861,7 @@
             }
         </script>
         <!-- Start Footer Area -->
-       <%@include file="footer.jsp" %>
+        <%@include file="footer.jsp" %>
         <!-- /End Footer Area -->
 
 

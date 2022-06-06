@@ -48,7 +48,7 @@ public class HomeControl extends HttpServlet {
                 out.println("<div class=\"col-xl-3 col-lg-4 col-md-4 col-12\">\n"
                         + "												<div class=\"single-product\">\n"
                         + "													<div class=\"product-img\">\n"
-                        + "														<a href=\"product-details.html\">\n"
+                        + "														<a href=\"productdetail?pid="+p.getId()+"&tag=Products\">\n"
                         + "															<img class=\"default-img\" src=\"" + p.getImage() + "\" alt=\"#\">\n"
                         + "															<img class=\"hover-img\" src=\"" + p.getImage() + "\" alt=\"#\">\n"
                         + "														</a>\n"

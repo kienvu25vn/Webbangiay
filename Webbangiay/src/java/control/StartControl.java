@@ -43,6 +43,11 @@ public class StartControl extends HttpServlet {
             List<Product> list = dao.getAllProductsByCID("1");
             HttpSession session = request.getSession();
             List<UserCarts> UserCarts = (List<UserCarts>) session.getAttribute("listUserCarts");
+            List<Product> listHotItem = dao.getHotItem();
+            List<Product> listTopViewItem = dao.getTopViewItem();
+            List<Product> listBestSellerItem = dao.getTopSellerProducs();
+            listBestSellerItem.remove(listBestSellerItem.get(listBestSellerItem.size() - 1));
+            listBestSellerItem.remove(listBestSellerItem.get(listBestSellerItem.size() - 1));
             Account acc = (Account) session.getAttribute("acc");
             if (UserCarts == null) {
                 UserCarts = new ArrayList<>();
@@ -61,6 +66,9 @@ public class StartControl extends HttpServlet {
             }
             request.setAttribute("listByCID", list);
             request.setAttribute("cid", 1);
+            request.setAttribute("listHotItem", listHotItem);
+            request.setAttribute("listTopViewItem", listTopViewItem);
+            request.setAttribute("listBestSellerItem", listBestSellerItem);
             request.getRequestDispatcher("home.jsp").forward(request, response);
         } catch (Exception e) {
         }

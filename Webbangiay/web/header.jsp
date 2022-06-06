@@ -189,11 +189,7 @@
 
                                                     </li>
 
-                                                    <li><a href="#">Blog<i class="ti-angle-down"></i></a>
-                                                        <ul class="dropdown">
-                                                            <li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
-                                                        </ul>
-                                                    </li>
+                                                    
                                                     <li><a href="contact.html">Contact Us</a></li>
                                                         <c:if test="${sessionScope.acc.isAdmin == 1}">
                                                         <li><a href="manager">Manage Products</a></li>

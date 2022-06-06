@@ -4,6 +4,7 @@
  */
 package control;
 
+import com.mysql.cj.Session;
 import dao.DAO;
 import entity.Product;
 import entity.Review;
@@ -12,9 +13,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,12 +38,23 @@ public class ProductDetailControl extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-
+            HttpSession session = request.getSession();
             DAO dao = new DAO();
             String pid = request.getParameter("pid");
+            List<Product> recentView = (List<Product>) session.getAttribute("recentView");
+            if (recentView == null) {
+                recentView = new ArrayList<>();
+            } else {
+                   recentView.add(dao.getProductById(pid)); 
+            }
+            session.setAttribute("recentView", recentView);
+
+            dao.updateViewProduct(pid);
             Product p = dao.getProductById1(pid);
             String tag = request.getParameter("tag");
             List<Review> listReview = dao.getReviewProduct(Integer.parseInt(pid));
+            List<Product> listSimilarProducts = dao.getSimilarProduct(pid);
+
             if (listReview == null || listReview.size() == 0) {
                 listReview = new ArrayList<>();
             } else {
@@ -57,6 +71,7 @@ public class ProductDetailControl extends HttpServlet {
             request.setAttribute("proCid", "category?cid=" + dao.getCidProduct(p.getId() + ""));
             request.setAttribute("listReview", listReview);
             request.setAttribute("totalreview", listReview.size());
+            request.setAttribute("listSimilarProducts", listSimilarProducts);
             request.getRequestDispatcher("shopdetail.jsp").forward(request, response);
         } catch (Exception e) {
         }

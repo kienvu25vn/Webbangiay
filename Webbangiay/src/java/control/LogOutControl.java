@@ -36,7 +36,7 @@ public class LogOutControl extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("acc");
         session.removeAttribute("listCart");
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        request.getRequestDispatcher("start").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

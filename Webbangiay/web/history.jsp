@@ -21,7 +21,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Title Tag  -->
-        <title>Eshop - eCommerce HTML5 Template.</title>
+        <title>Group 18</title>
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="images/favicon.png">
         <!-- Web Font -->
@@ -85,7 +85,7 @@
                             <div class="top-left">
                                 <ul class="list-main">
                                     <!-- <li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li> -->
-                                    <li><i class="ti-email"></i> support@shophub.com</li>
+                                    <li><i class="ti-email"></i> group18@webshop.com</li>
                                 </ul>
                             </div>
                             <!--/ End Top Left -->
@@ -250,11 +250,7 @@
 
                                                     </li>
 
-                                                    <li><a href="#">Blog<i class="ti-angle-down"></i></a>
-                                                        <ul class="dropdown">
-                                                            <li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
-                                                        </ul>
-                                                    </li>
+                                                    
                                                     <li><a href="contact.html">Contact Us</a></li>
                                                         <c:if test="${sessionScope.acc.isAdmin == 1}">
                                                         <li><a href="manager">Manage Products</a></li>

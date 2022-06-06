@@ -694,8 +694,105 @@ public class DAO {
         return list;
     }
 
+    public List<Product> getHotItem() {
+        List<Product> list = new ArrayList<>();
+        String query = "select * from sanpham  order by 13 desc limit 4";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getInt(8)));
+            }
+
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<Product> getTopViewItem() {
+        List<Product> list = new ArrayList<>();
+        String query = "select * from sanpham  order by 14 desc limit 3";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getInt(8)));
+            }
+
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public void updateViewProduct(String id) {
+        int viewCount = 0;
+        String get = "select viewAmount from sanpham where id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(get);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                viewCount = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        String update = "update sanpham set viewAmount = ? where id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(update);
+            ps.setString(1, viewCount + 1 + "");
+            ps.setString(2, id);
+            int c = ps.executeUpdate();
+            System.out.println(c);
+        } catch (Exception e) {
+        }
+
+    }
+
+    public List<Product> getSimilarProduct(String id) {
+        String color = "";
+        double price = 0d;
+        List<Product> list = new ArrayList<>();
+        String query = "select price , color from sanpham where id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                price = rs.getDouble(1);
+                color = rs.getString(2);
+            }
+        } catch (Exception e) {
+        }
+        double price1 = price - 100;
+        double price2 = price + 100;
+        String query1 = "select * from sanpham  where id != ? and  color like ? or id != ? and price > ? and price < ? ORDER BY RAND()\n" +
+"LIMIT 4;";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query1);
+            ps.setString(1, id);
+            ps.setString(2, color);
+            ps.setString(3, id);
+            ps.setDouble(4, price1);
+            ps.setDouble(5, price2);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getInt(8)));
+            }
+
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
-
+        System.out.println(dao.getSimilarProduct("3").get(1).getTitle());
     }
 }
